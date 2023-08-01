@@ -3,7 +3,9 @@ package james.reactive.web.controller;
 import james.reactive.web.model.Reservation;
 import james.reactive.web.service.ReservationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,8 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/v1/rooms/reservation")
 @CrossOrigin
+@Slf4j
+@Service
 @RequiredArgsConstructor
 public class ReservationController {
 
