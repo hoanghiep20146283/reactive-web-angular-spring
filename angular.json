@@ -58,6 +58,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "reservation-app:build",
+            "port": 3000
+          },
           "configurations": {
             "production": {
               "browserTarget": "reservation-app:build:production"
@@ -94,5 +98,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "f8f39674-22a8-4873-bf15-1c1ddf86b6a7"
   }
 }
