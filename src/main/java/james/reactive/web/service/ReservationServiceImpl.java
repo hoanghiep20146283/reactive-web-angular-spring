@@ -3,7 +3,6 @@ package james.reactive.web.service;
 import de.flapdoodle.embed.mongo.spring.autoconfigure.MongodWrapper;
 import james.reactive.web.model.Reservation;
 import james.reactive.web.repository.ReactiveReservationRepository;
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +19,6 @@ public class ReservationServiceImpl implements ReservationService {
 
   private final ReactiveReservationRepository reactiveReservationRepository;
   private final MongodWrapper mongodWrapper;
-
-  @PostConstruct
-  public void afterConstruct() {
-    log.info("After construct");
-  }
 
   @Override
   public Mono<Reservation> getReservation(String id) {

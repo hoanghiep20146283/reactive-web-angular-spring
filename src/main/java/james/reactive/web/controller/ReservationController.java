@@ -19,13 +19,14 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/v1/rooms/reservation")
+@RequestMapping(ReservationController.V1_URL_RESERVATION)
 @CrossOrigin
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReservationController {
 
+  public static final String V1_URL_RESERVATION = "/api/v1/rooms/reservation";
   private final ReservationService reservationService;
 
   @GetMapping(path = "{roomId}", produces = MediaType.APPLICATION_JSON_VALUE)
