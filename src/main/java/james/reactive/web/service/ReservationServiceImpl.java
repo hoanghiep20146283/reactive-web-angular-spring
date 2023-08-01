@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -38,13 +39,14 @@ public class ReservationServiceImpl implements ReservationService {
 
   @Override
   public Mono<Reservation> updateReservation(String id, Mono<Reservation> reservationMono) {
-    return reservationMono.flatMap(reservation -> reactiveReservationRepository.findById(id).flatMap(existing -> {
-      existing.setPrice(reservation.getPrice());
-      existing.setCheckIn(reservation.getCheckIn());
-      existing.setCheckOut(reservation.getCheckOut());
-      existing.setRoomNumber(reservation.getRoomNumber());
-      return Mono.just(existing);
-    }))
+    return reservationMono.flatMap(
+            reservation -> reactiveReservationRepository.findById(id).flatMap(existing -> {
+              existing.setPrice(reservation.getPrice());
+              existing.setCheckIn(reservation.getCheckIn());
+              existing.setCheckOut(reservation.getCheckOut());
+              existing.setRoomNumber(reservation.getRoomNumber());
+              return Mono.just(existing);
+            }))
         .flatMap(reactiveReservationRepository::save)
         .switchIfEmpty(Mono.error(NotFoundException::new));
   }
@@ -54,9 +56,15 @@ public class ReservationServiceImpl implements ReservationService {
     return reactiveReservationRepository.deleteById(id);
   }
 
+  @Override
+  public Flux<Reservation> getAll() {
+    return reactiveReservationRepository.findAll();
+  }
+
   @PreDestroy
   public void clearMongoEmbedded() {
     log.info("Closing");
-    ReflectionUtils.invokeMethod(ReflectionUtils.findMethod(mongodWrapper.getClass(), "stop"), mongodWrapper);
+    ReflectionUtils.invokeMethod(ReflectionUtils.findMethod(mongodWrapper.getClass(), "stop"),
+        mongodWrapper);
   }
 }
