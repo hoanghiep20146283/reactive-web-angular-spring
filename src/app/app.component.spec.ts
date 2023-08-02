@@ -1,8 +1,16 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import {TestBed} from '@angular/core/testing';
+import {AppComponent} from './app.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from "@angular/common/http";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
+    imports: [
+      RouterTestingModule,
+      ReactiveFormsModule,
+      HttpClientModule
+    ],
     declarations: [AppComponent]
   }));
 
