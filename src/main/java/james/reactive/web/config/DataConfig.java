@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Profile;
 
 @Profile("local")
 @Configuration
-@Import(EmbeddedMongoAutoConfiguration.class)
+@Import({EmbeddedMongoAutoConfiguration.class})
 public class DataConfig {
 }
