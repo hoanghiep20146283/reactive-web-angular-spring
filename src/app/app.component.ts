@@ -1,13 +1,14 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {Reservation, ReservationRequest, ReservationService} from "./reservation.service";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+import { Reservation, ReservationRequest, ReservationService } from "./reservation.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  exampleInput: string = "Example Input";
   title = 'reservation-app';
   rooms!: Room[];
   roomSearchForm!: FormGroup;
@@ -17,8 +18,38 @@ export class AppComponent {
   currentRoomNumber!: string;
   currentReservations!: Reservation[];
 
+  // Form Example
+  form!: FormGroup;
+  user = {
+    firstName: '',
+    lastName: '',
+  };
+
+  onSubmit(formInfo: any) {
+    console.log('Form submitted:', formInfo);
+  }
+
+  printError(errors: object) : string {
+    return JSON.stringify(errors);
+  }
+
+  lastNameValidator(control: FormControl): ValidationErrors  | null {
+      // if (control.value.trim().length === 0) {
+      //   return null;
+      // }
+      return { lastName: true }
+  }
 
   ngOnInit() {
+    // Form Validator
+    this.form = new FormGroup({
+      firstName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+      ]),
+      lastName: new FormControl('', this.lastNameValidator as ValidatorFn),
+    });
+
     this.roomSearchForm = new FormGroup({
       checkIn: new FormControl(''),
       checkOut: new FormControl(''),
@@ -36,6 +67,11 @@ export class AppComponent {
     })
     this.rooms = [new Room("1", 111, 100), new Room("2", 112, 200), new Room("3", 113, 300)];
     this.getCurrentReservations();
+
+  }
+
+  onChildItemDelete(event: any) {
+    console.log("Event:" + event + "; type: " + (typeof event));
   }
 
   getCurrentReservations() {
@@ -47,7 +83,7 @@ export class AppComponent {
 
   createReservation() {
     this.reservationService.createReservation(
-        new ReservationRequest(this.currentRoomNumber, this.currentPrice, this.currentCheckIn, this.currentCheckOut)
+      new ReservationRequest(this.currentRoomNumber, this.currentPrice, this.currentCheckIn, this.currentCheckOut)
     ).subscribe(result => {
       this.getCurrentReservations();
     })
@@ -55,7 +91,7 @@ export class AppComponent {
 
   deleteReservation(id: string) {
     console.log("Deleting...")
-    this.reservationService.deleteReservation(id).subscribe( result => {
+    this.reservationService.deleteReservation(id).subscribe(result => {
       this.getCurrentReservations();
     });
   }
@@ -76,3 +112,4 @@ export class Room {
     this.price = price;
   }
 }
+
