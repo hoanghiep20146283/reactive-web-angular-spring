@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
-import { Reservation, ReservationRequest, ReservationService } from "./reservation.service";
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+import { Reservation, ReservationRequest, ReservationService, SearchParams } from "./reservation.service";
+import { MediaItemService } from './media-item.services';
+import { MediaItem } from './media-item.model';
+import { injectTokens } from './providers';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +21,11 @@ export class AppComponent implements OnInit {
   currentPrice!: number;
   currentRoomNumber!: string;
   currentReservations!: Reservation[];
+  mediaItems!: MediaItem[];
 
   // Form Example
   form!: FormGroup;
+  mediaItemForm!: FormGroup;
   user = {
     firstName: '',
     lastName: '',
@@ -29,32 +35,50 @@ export class AppComponent implements OnInit {
     console.log('Form submitted:', formInfo);
   }
 
-  printError(errors: object) : string {
+  printError(errors: object): string {
     return JSON.stringify(errors);
   }
 
-  lastNameValidator(control: FormControl): ValidationErrors  | null {
-      // if (control.value.trim().length === 0) {
-      //   return null;
-      // }
-      return { lastName: true }
+  lastNameValidator(control: FormControl): ValidationErrors | null {
+    // if (control.value.trim().length === 0) {
+    //   return null;
+    // }
+    return { lastName: true }
+  }
+
+  onMediaItemDelete(mediaItem: MediaItem) {
+    this.mediaItemService.delete(mediaItem);
+  }
+
+  onSubmitMediaItem(mediaItem: any) {
+    console.log('MediaItem submitted:', mediaItem);
+  
   }
 
   ngOnInit() {
+    // Media Items
+    this.mediaItems = this.mediaItemService.get();
+
     // Form Validator
-    this.form = new FormGroup({
-      firstName: new FormControl('', [
+    this.form = this.formBuilder.group({
+      firstName: this.formBuilder.control('', [
         Validators.required,
         Validators.minLength(4),
       ]),
-      lastName: new FormControl('', this.lastNameValidator as ValidatorFn),
+      lastName: this.formBuilder.control('', this.lastNameValidator as ValidatorFn),
+    });
+
+    this.mediaItemForm = this.formBuilder.group({
+      name: this.formBuilder.control(''),
+      description: this.formBuilder.control(''),
+      medium: this.formBuilder.control(''),
     });
 
     this.roomSearchForm = new FormGroup({
-      checkIn: new FormControl(''),
-      checkOut: new FormControl(''),
-      price: new FormControl(''),
-      roomNumber: new FormControl(''),
+      checkIn: this.formBuilder.control(''),
+      checkOut: this.formBuilder.control(''),
+      price: this.formBuilder.control(''),
+      roomNumber: this.formBuilder.control(''),
     });
     this.roomSearchForm.valueChanges.subscribe(form => {
       this.currentCheckIn = form.checkIn;
@@ -67,7 +91,17 @@ export class AppComponent implements OnInit {
     })
     this.rooms = [new Room("1", 111, 100), new Room("2", 112, 200), new Room("3", 113, 300)];
     this.getCurrentReservations();
+    this.searchReservations({});
 
+    // Listen route change event
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      let roomNumbers = paramMap.get('roomNumber');
+      if(roomNumbers) {
+        const jsonString = JSON.stringify(roomNumbers);
+        console.log(`Room Numbers: ${roomNumbers}`)
+      }
+      this.getCurrentReservations();
+    })
   }
 
   onChildItemDelete(event: any) {
@@ -81,10 +115,18 @@ export class AppComponent implements OnInit {
     })
   }
 
+  searchReservations(searchParams: SearchParams) {
+    this.reservationService.searchReservations(searchParams).subscribe(reservations => {
+      reservations.forEach(reservation => console.log(reservation))
+      this.currentReservations = reservations;
+    })
+  }
+
   createReservation() {
     this.reservationService.createReservation(
       new ReservationRequest(this.currentRoomNumber, this.currentPrice, this.currentCheckIn, this.currentCheckOut)
     ).subscribe(result => {
+      this.router.navigate(['/child']);
       this.getCurrentReservations();
     })
   }
@@ -96,7 +138,13 @@ export class AppComponent implements OnInit {
     });
   }
 
-  constructor(private reservationService: ReservationService) {
+  constructor(@Inject('lookupList') public lookupList: string[],
+    @Inject(injectTokens) public injectTokens: string[],
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private reservationService: ReservationService,
+    private formBuilder: FormBuilder,
+    private mediaItemService: MediaItemService) {
 
   }
 }

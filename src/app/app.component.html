@@ -71,6 +71,13 @@
     background-size: cover; /* Resize the background image to cover the icon area */
   }
 
+  .room_icon_large {
+    width: 200px; /* Set the desired width of the icon */
+    height: 200px; /* Set the desired height of the icon */
+    background-image: url("assets/images/intro_room.jpg"); /* Replace 'path/to/your-icon-image.png' with the actual path to your icon image */
+    background-size: cover; /* Resize the background image to cover the icon area */
+  }
+
   .toolbar #twitter-logo {
     height: 40px;
     margin: 0 8px;
@@ -322,6 +329,15 @@
   }
 </style>
 
+<!-- Nav -->
+<nav>
+  <a routerLink="/app">
+    <img src="assets/images/intro_room.jpg" class="room_icon_large"> Room Navigator
+  </a>
+  <a routerLink="/child">
+    <img src="assets/images/intro_room.jpg" class="room_icon_large"> Child Navigator
+  </a>
+</nav>
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
   <img
@@ -567,7 +583,7 @@
   ></app-child>
 
   <h4>Template-driven Form Example</h4>
-  <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
     <div>
       <label for="firstName">First Name:</label>
       <input
@@ -596,6 +612,63 @@
     </div>
     <button type="submit" [disabled]="form.invalid">Submit</button>
   </form>
+
+  <div class="row" *ngIf="mediaItems">
+    <h1>Media Items</h1>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table" id="mediaItems">
+          <tbody>
+            <tr *ngFor="let mediaItem of mediaItems">
+              <td>
+                <strong>Name: {{ mediaItem.name }}</strong>
+                <br />
+                <strong>Description: {{ mediaItem.description }}</strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h4>Add Media Item</h4>
+  <form
+    [formGroup]="mediaItemForm"
+    (ngSubmit)="onSubmitMediaItem(mediaItemForm.value)"
+  >
+    <div>
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        formControlName="name"
+        required
+      />
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <input
+        type="text"
+        id="description"
+        name="description"
+        formControlName="description"
+        required
+      />
+    </div>
+    <div> 
+      <label for="medium">Medium:</label>
+      <select name="medium" id="medium" formControlName="medium">
+        <option *ngFor="let medium of lookupList" value="{{medium}}">{{medium}}</option>
+      </select>
+    </div>
+    <button type="submit" [disabled]="mediaItemForm.invalid">Submit</button>
+  </form>
+
+  <div>
+    <p> Inject Token Example: {{injectTokens}}</p>
+  </div>
 </div>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
