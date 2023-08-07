@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: zipkin-server
+
+armeria:
+  ports:
+    - port: 9411
+      protocols:
+        - HTTP
+
+server:
+  port: 9412
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
