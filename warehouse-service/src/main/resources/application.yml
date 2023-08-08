@@ -28,7 +28,7 @@ logging:
           sleuth: debug
 server:
   shutdown: graceful
-  port: 8083
+  port: 8084
 zipkin:
   enabled: true
   server:

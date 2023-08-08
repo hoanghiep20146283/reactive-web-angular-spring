@@ -1,17 +1,22 @@
 spring:
-  zipkin.storage.type: mysql
   application:
     name: zipkin-server
   datasource:
     url: jdbc:mysql://localhost:3306/zipkin
     username: root
     password: 1234
+    driverClassName: com.mysql.cj.jdbc.Driver
 
 armeria:
   ports:
     - port: 9411
       protocols:
         - HTTP
+
+zipkin:
+  storage:
+    type: mysql
+  self-tracing.enabled: true
 
 server:
   port: 9412

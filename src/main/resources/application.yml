@@ -14,6 +14,8 @@ management:
     shutdown:
       enabled: 'true'
 spring:
+  kafka:
+    bootstrap-servers: localhost:9092
   reactor:
     netty:
       shutdown-quiet-period: 1s
@@ -21,7 +23,7 @@ spring:
     mongodb:
       username: james
       password: '1234'
-      port: '27040'
+      port: '27043'
   zipkin:
     sender:
       type: WEB
@@ -49,4 +51,4 @@ zipkin:
   enabled: true
   server:
     url: http://127.0.0.1:9411/api/v2/spans
-warehouse.endpoint.url: http://127.0.0.1:8083
+warehouse.endpoint.url: http://127.0.0.1:8084

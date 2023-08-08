@@ -1,5 +1,7 @@
 package james.reactive.web.controller;
 
+import static james.reactive.web.constant.MessageQueueConstant.BINDING_RESERVATION;
+
 import brave.Span;
 import brave.Tracing;
 import james.reactive.web.model.Reservation;
@@ -8,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
 import org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -36,6 +38,7 @@ public class ReservationController {
   private final ReservationService reservationService;
   private final Tracing tracing;
   private final WebClient.Builder builder;
+  private final KafkaTemplate<String, Reservation> reservationKafkaTemplate;
 
   @Value("${warehouse.endpoint.url}")
   private String wareHouseUrl;
@@ -61,7 +64,8 @@ public class ReservationController {
       .flatMap(itemId -> {
         // Handle the response body here
         log.info("Return from WareHouseService: {}", itemId);
-        return reservationService.getReservation(roomId);
+        return reservationService.getReservation(roomId)
+          .doOnNext(reservation -> reservationKafkaTemplate.send(BINDING_RESERVATION, reservation));
       })
       .doOnError(error -> log.error("Error from WareHouseService: {}", error.getMessage(), error));
   }
