@@ -16,6 +16,7 @@ java {
 }
 
 dependencies {
+  implementation("io.zipkin.java:zipkin-autoconfigure-storage-mysql:2.12.9")
   implementation("io.zipkin.java:zipkin-server:2.12.9")
   implementation("io.zipkin.java:zipkin-autoconfigure-ui:2.12.9")
   implementation("org.springframework.boot:spring-boot-starter-actuator:2.0.1.RELEASE")

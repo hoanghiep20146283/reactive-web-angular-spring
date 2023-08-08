@@ -1,6 +1,11 @@
 spring:
+  zipkin.storage.type: mysql
   application:
     name: zipkin-server
+  datasource:
+    url: jdbc:mysql://localhost:3306/zipkin
+    username: root
+    password: 1234
 
 armeria:
   ports:
