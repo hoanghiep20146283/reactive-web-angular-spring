@@ -1,0 +1,52 @@
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://127.0.0.1:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: health,info,shutdown
+  endpoint:
+    shutdown:
+      enabled: 'true'
+spring:
+  reactor:
+    netty:
+      shutdown-quiet-period: 1s
+  data:
+    mongodb:
+      username: james
+      password: '1234'
+      port: '27040'
+  zipkin:
+    sender:
+      type: WEB
+    sleuth:
+      sampler:
+        probability: '1'
+  profiles:
+    active: local
+  application:
+    name: reservation-app
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          sleuth: debug
+server:
+  shutdown: graceful
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 5.0.5
+zipkin:
+  enabled: true
+  server:
+    url: http://127.0.0.1:9411/api/v2/spans
+warehouse.endpoint.url: http://127.0.0.1:8083

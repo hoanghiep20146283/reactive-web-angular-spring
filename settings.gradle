@@ -1,3 +1,5 @@
 rootProject.name = 'web'
 include 'zipkin-server'
+include 'common'
+include 'warehouse-service'
 

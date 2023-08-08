@@ -1,4 +1,4 @@
-package james.reactive.web.config;
+package com.james.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +26,4 @@ public class WebConfig {
   public ObjectWriter objectWriter(ObjectMapper objectMapper) {
     return objectMapper.writerWithDefaultPrettyPrinter();
   }
-
-
 }

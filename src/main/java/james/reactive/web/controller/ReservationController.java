@@ -1,9 +1,12 @@
 package james.reactive.web.controller;
 
+import brave.Span;
+import brave.Tracing;
 import james.reactive.web.model.Reservation;
 import james.reactive.web.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
+import org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -28,10 +34,36 @@ public class ReservationController {
 
   public static final String V1_URL_RESERVATION = "/api/v1/rooms/reservation";
   private final ReservationService reservationService;
+  private final Tracing tracing;
+  private final WebClient.Builder builder;
+
+  @Value("${warehouse.endpoint.url}")
+  private String wareHouseUrl;
 
   @GetMapping(path = "{roomId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Mono<Reservation> getReservationById(@PathVariable String roomId) {
-    return reservationService.getReservation(roomId);
+    // Create a root span.
+    Span span = tracing.tracer().currentSpan();
+    span.tag("key", "firstBiz");
+    WebClient webClient = builder // use injected builder
+      .baseUrl(wareHouseUrl)
+      .build();
+
+    RequestHeadersUriSpec requestHeadersUriSpec = webClient.get();
+    tracing.propagation()
+      .injector((request, key, value) -> ((RequestHeadersUriSpec) request).header(key, value))
+      .inject(span.context(), requestHeadersUriSpec);
+    // Make the GET request with the path variable
+    return requestHeadersUriSpec
+      .uri("/api/v2/items/{itemId}", "1")
+      .retrieve()
+      .bodyToMono(String.class)
+      .flatMap(itemId -> {
+        // Handle the response body here
+        log.info("Return from WareHouseService: {}", itemId);
+        return reservationService.getReservation(roomId);
+      })
+      .doOnError(error -> log.error("Error from WareHouseService: {}", error.getMessage(), error));
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,7 +78,7 @@ public class ReservationController {
 
   @PutMapping(path = "{roomId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public Mono<Reservation> updateReservation(@PathVariable String roomId,
-      @RequestBody Mono<Reservation> reservationMono) {
+    @RequestBody Mono<Reservation> reservationMono) {
     return reservationService.updateReservation(roomId, reservationMono);
   }
 
