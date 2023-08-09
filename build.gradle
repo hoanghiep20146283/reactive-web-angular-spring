@@ -48,12 +48,6 @@ dependencies {
   testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 }
 
-tasks.withType(JavaCompile) {
-  options.compilerArgs = [
-    '-Amapstruct.suppressGeneratorTimestamp=true'
-  ]
-}
-
 tasks.named('test') {
   useJUnitPlatform()
 }
