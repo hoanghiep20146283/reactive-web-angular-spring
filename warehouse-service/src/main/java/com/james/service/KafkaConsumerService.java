@@ -46,14 +46,14 @@ public class KafkaConsumerService {
             consumerRecord.topic(),
             consumerRecord.offset(),
             StreamSupport.stream(consumerRecord.headers().spliterator(), false)
-              .map(header -> header.key() + ": " + Arrays.toString(header.value())).collect(
+              .map(header -> header.key() + ": " + new String(header.value())).collect(
                 Collectors.joining("\t")));
           Extractor<ConsumerRecord<String, ReservationDto>> extractor = tracing.propagation()
             .extractor((request, key) ->
               StreamSupport.stream(request.headers().spliterator(), false)
                 .filter(header -> header.key().equals(key))
                 .findFirst()
-                .map(header -> Arrays.toString(header.value()))
+                .map(header -> new String(header.value()))
                 .orElse(Strings.EMPTY));
           Span serverSpan = Optional.ofNullable(extractor.extract(consumerRecord))
             .map(TraceContextOrSamplingFlags::context)
@@ -73,12 +73,14 @@ public class KafkaConsumerService {
           serverSpan.tag(PROTOCOL_TRACING, Protocol.MESSAGE_QUEUE.getValue());
         }
       )
-      .map(ConsumerRecord::value)
-      .doOnNext(fakeConsumerDTO -> log.info("successfully consumed {}={}",
-        ReservationDto.class.getSimpleName(), fakeConsumerDTO))
+      .doOnNext(consumerRecord -> log.info("successfully consumed {}={}",
+        ReservationDto.class.getSimpleName(), consumerRecord.value()))
       .doOnError(throwable -> log.error("something bad happened while consuming : {}",
         throwable.getMessage()))
-      .doFinally(complete -> tracing.tracer().currentSpan().finish())
-      .subscribe();
+      .subscribe(consumerRecord -> {
+        log.info("Sending span: {}", tracing.tracer().currentSpan().context().spanId());
+        tracing.tracer().currentSpan().tag("RECORD_KEY", consumerRecord.key());
+        tracing.tracer().currentSpan().finish();
+      });
   }
 }

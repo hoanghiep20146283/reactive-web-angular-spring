@@ -44,6 +44,11 @@ dependencies {
   compileOnly 'org.projectlombok:lombok:1.18.28'
   annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
+  // Logstash
+  implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '7.4'
+  implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
+  implementation group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.2'
+
   testCompileOnly 'org.projectlombok:lombok:1.18.28'
   testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 }
