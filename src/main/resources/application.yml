@@ -23,7 +23,7 @@ spring:
     mongodb:
       username: james
       password: '1234'
-      port: '27043'
+      port: '27050'
   zipkin:
     sender:
       type: WEB

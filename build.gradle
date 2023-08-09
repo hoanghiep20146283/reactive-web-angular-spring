@@ -34,7 +34,7 @@ dependencies {
   testImplementation 'io.projectreactor:reactor-test'
 
   // Message queue
-  implementation 'org.springframework.cloud:spring-kafka:3.1.0'
+  implementation "io.projectreactor.kafka:reactor-kafka:1.1.0.RELEASE"
 
   // Lombok
   compileOnly 'org.projectlombok:lombok:1.18.28'
