@@ -36,12 +36,22 @@ dependencies {
   // Message queue
   implementation "io.projectreactor.kafka:reactor-kafka:1.1.0.RELEASE"
 
+  // Mapstruct
+  implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.5.5.Final'
+  annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.5.5.Final'
+
   // Lombok
   compileOnly 'org.projectlombok:lombok:1.18.28'
   annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
   testCompileOnly 'org.projectlombok:lombok:1.18.28'
   testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
+}
+
+tasks.withType(JavaCompile) {
+  options.compilerArgs = [
+    '-Amapstruct.suppressGeneratorTimestamp=true'
+  ]
 }
 
 tasks.named('test') {

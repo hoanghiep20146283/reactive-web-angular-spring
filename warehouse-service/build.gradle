@@ -28,6 +28,10 @@ dependencies {
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'io.projectreactor:reactor-test'
 
+  // Message queue
+  implementation "io.projectreactor.kafka:reactor-kafka:1.1.0.RELEASE"
+  implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.9.10'
+
   // Lombok
   compileOnly 'org.projectlombok:lombok:1.18.28'
   annotationProcessor 'org.projectlombok:lombok:1.18.28'

@@ -1,4 +1,4 @@
-package james.reactive.web.constant;
+package com.james.constant;
 
 public class MessageQueueConstant {
 

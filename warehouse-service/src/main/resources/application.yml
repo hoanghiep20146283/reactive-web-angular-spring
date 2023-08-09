@@ -20,6 +20,9 @@ spring:
     active: local
   application:
     name: warehouse-service
+  kafka:
+    bootstrap-servers: localhost:9092
+    group-id: reservation
 logging:
   level:
     org:

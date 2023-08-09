@@ -1,15 +1,15 @@
 package james.reactive.web.controller;
 
-import static james.reactive.web.constant.MessageQueueConstant.TOPIC_RESERVATION;
+import static com.james.constant.MessageQueueConstant.TOPIC_RESERVATION;
 
 import brave.Span;
 import brave.Tracing;
+import com.james.model.ReservationDto;
+import james.reactive.web.mapper.ReservationMapper;
 import james.reactive.web.model.Reservation;
 import james.reactive.web.service.ReservationService;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -45,7 +45,8 @@ public class ReservationController {
   private final ReservationService reservationService;
   private final Tracing tracing;
   private final WebClient.Builder builder;
-  private final KafkaSender<String, Reservation> reservationKafkaSender;
+  private final KafkaSender<String, ReservationDto> reservationKafkaSender;
+  private final ReservationMapper reservationMapper;
 
   @Value("${warehouse.endpoint.url}")
   private String wareHouseUrl;
@@ -79,8 +80,8 @@ public class ReservationController {
         tracing.propagation()
           .injector((request, key, value) -> ((HashMap) request).put(key, value))
           .inject(span.context(), traceDatas);
-        SenderRecord<String, Reservation, Object> senderRecord = SenderRecord.create(
-          new ProducerRecord<>(TOPIC_RESERVATION, "1", reservation),
+        SenderRecord<String, ReservationDto, Object> senderRecord = SenderRecord.create(
+          new ProducerRecord<>(TOPIC_RESERVATION, "1", reservationMapper.toDto(reservation)),
           traceDatas);
         traceDatas.entrySet().stream().map(entry -> new Header() {
           @Override
@@ -92,20 +93,15 @@ public class ReservationController {
           public byte[] value() {
             return entry.getValue().getBytes();
           }
-        }).forEach(header -> {
-          senderRecord.headers().add(header);
-        });
+        }).forEach(header -> senderRecord.headers().add(header));
 
-        reservationKafkaSender.send(Mono.just(senderRecord))
+        return reservationKafkaSender.send(Mono.just(senderRecord))
           .doOnError(e -> log.error("Send failed", e))
-          .subscribe(r -> log.info("Sent!"));
-        return Mono.just(reservation);
+          .doFinally(complete -> log.info("Sent to Kafka!"))
+          .map(result -> reservation)
+          .next();
       })
       .doOnError(error -> log.error("Error from WareHouseService: {}", error.getMessage(), error));
-  }
-
-  public void sendMessages(String topic, Reservation reservation) {
-
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

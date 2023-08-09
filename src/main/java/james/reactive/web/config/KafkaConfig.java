@@ -1,6 +1,6 @@
 package james.reactive.web.config;
 
-import james.reactive.web.model.Reservation;
+import com.james.model.ReservationDto;
 import james.reactive.web.service.ReservationSerializer;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class KafkaConfig {
   private String bootstrapAddress;
 
   @Bean
-  public KafkaSender<String, Reservation> producerFactory() {
+  public KafkaSender<String, ReservationDto> producerFactory() {
     Map<String, Object> producerProps = new HashMap<>();
     producerProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
     producerProps.put(ProducerConfig.CLIENT_ID_CONFIG, "sample-producer");
@@ -27,7 +27,7 @@ public class KafkaConfig {
     producerProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     producerProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ReservationSerializer.class);
 
-    SenderOptions<String, Reservation> senderOptions = SenderOptions.<String, Reservation>create(
+    SenderOptions<String, ReservationDto> senderOptions = SenderOptions.<String, ReservationDto>create(
       producerProps).maxInFlight(1);
     return KafkaSender.create(senderOptions);
   }

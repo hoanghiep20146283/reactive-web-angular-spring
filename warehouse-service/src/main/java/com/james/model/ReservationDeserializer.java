@@ -1,19 +1,17 @@
-package james.reactive.web.service;
+package com.james.model;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.james.model.ReservationDto;
-import james.reactive.web.model.Reservation;
 import lombok.SneakyThrows;
-import org.apache.kafka.common.serialization.Serializer;
+import org.apache.kafka.common.serialization.Deserializer;
 
-public class ReservationSerializer implements Serializer<ReservationDto> {
+public class ReservationDeserializer implements Deserializer<ReservationDto> {
 
   private final ObjectMapper objectMapper;
 
-  public ReservationSerializer() {
+  public ReservationDeserializer() {
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.registerModule(new JavaTimeModule());
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
@@ -23,7 +21,7 @@ public class ReservationSerializer implements Serializer<ReservationDto> {
 
   @Override
   @SneakyThrows
-  public byte[] serialize(String topic, ReservationDto data) {
-    return objectMapper.writeValueAsBytes(data);
+  public ReservationDto deserialize(String topic, byte[] data) {
+    return objectMapper.reader().readValue(data, ReservationDto.class);
   }
 }
