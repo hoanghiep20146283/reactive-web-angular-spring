@@ -17,8 +17,10 @@ repositories {
 
 dependencies {
   implementation project(':common')
-  implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.7.0'
-  implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.7.0'
+  if (System.getenv()['spring.profiles.active'].equals('local')) {
+    implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.7.0'
+    implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.7.0'
+  }
 
   // Tracing
   implementation group: 'io.zipkin.reporter2', name: 'zipkin-sender-okhttp3', version: '2.7.9'
