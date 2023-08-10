@@ -1,0 +1,29 @@
+{
+  "timestamp" : "2023-08-09 21:39:36.542",
+  "level" : "INFO",
+  "thread" : "main",
+  "logger" : "james.reactive.web.WebApplication",
+  "message" : "Starting WebApplication using Java 19.0.2 with PID 22772 (C:\\Projects\\Reactive-angular-spring\\reservation-app\\build\\classes\\java\\main started by Hiep_Hoang in C:\\Projects\\Reactive-angular-spring\\reservation-app)",
+  "context" : "default"
+}{
+  "timestamp" : "2023-08-09 21:39:36.565",
+  "level" : "INFO",
+  "thread" : "main",
+  "logger" : "james.reactive.web.WebApplication",
+  "message" : "The following 1 profile is active: \"local\"",
+  "context" : "default"
+}{
+  "timestamp" : "2023-08-09 21:39:42.162",
+  "level" : "INFO",
+  "thread" : "main",
+  "logger" : "james.reactive.web.WebApplication",
+  "message" : "Started WebApplication in 6.536 seconds (process running for 7.066)",
+  "context" : "default"
+}{
+  "timestamp" : "2023-08-09 21:40:34.950",
+  "level" : "INFO",
+  "thread" : "Thread-21",
+  "logger" : "james.reactive.web.service.ReservationServiceImpl",
+  "message" : "Closing",
+  "context" : "default"
+}

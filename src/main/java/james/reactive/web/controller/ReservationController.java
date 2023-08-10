@@ -1,6 +1,10 @@
 package james.reactive.web.controller;
 
 import static com.james.constant.MessageQueueConstant.TOPIC_RESERVATION;
+import static com.james.constant.TracingConstant.MDC_SPAN_ID;
+import static com.james.constant.TracingConstant.MDC_TRACE_ID;
+import static com.james.utils.LogUtil.logOnError;
+import static com.james.utils.LogUtil.logOnNext;
 
 import brave.Span;
 import brave.Tracing;
@@ -32,6 +36,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.kafka.sender.KafkaSender;
 import reactor.kafka.sender.SenderRecord;
+import reactor.util.context.Context;
 
 @RestController
 @RequestMapping(ReservationController.V1_URL_RESERVATION)
@@ -96,9 +101,12 @@ public class ReservationController {
         }).forEach(header -> senderRecord.headers().add(header));
 
         return reservationKafkaSender.send(Mono.just(senderRecord))
-          .doOnError(e -> log.error("Send failed", e))
-          .doFinally(complete -> log.info("Sent to Kafka!"))
+          .doOnEach(logOnError(error -> log.error("Send failed", error)))
+          .doOnEach(
+            logOnNext(senderResult -> log.info("Sent to Kafka, senderResult: {}", senderResult)))
           .map(result -> reservation)
+          .contextWrite(Context.of(MDC_SPAN_ID, span.context().spanId())
+            .put(MDC_TRACE_ID, span.context().traceId()))
           .next();
       })
       .doOnError(error -> log.error("Error from WareHouseService: {}", error.getMessage(), error));

@@ -2,19 +2,26 @@
 <configuration>
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+      <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %replace(span_id: %X{MDC_SPAN_ID}){'span_id: $', ''} %replace(trace_id: %X{MDC_SPAN_ID}){'trace_id: $', ''} %msg%n
+      </pattern>
     </encoder>
   </appender>
 
   <appender name="LOG_FILE" class="ch.qos.logback.core.FileAppender">
-    <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
-      <jsonFormatter
-        class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
-        <prettyPrint>true</prettyPrint>
-      </jsonFormatter>
-      <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
-    </layout>
-    <file>/tmp/logs/reservation-app.log</file>
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers>
+        <timestamp>%d{ISO8601}</timestamp>
+        <message/>
+        <loggerName/>
+        <context/>
+        <mdc/>
+        <layout>
+          <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %replace(span_id: %X{MDC_SPAN_ID}){'span_id: $', ''} %replace(trace_id: %X{MDC_SPAN_ID}){'trace_id: $', ''} %msg%n
+          </pattern>
+        </layout>
+      </providers>
+    </encoder>
+    <file>C://logs/reservation-app.log</file>
   </appender>
 
   <logger name="james.reactive.web" additivity="false" level="info">
