@@ -25,7 +25,7 @@ spring:
     mongodb:
       username: james
       password: '1234'
-      port: ${MONGO_PORT:27020}
+      port: ${MONGO_PORT:27022}
       host: ${MONGO_HOST:localhost}
   zipkin:
     sender:

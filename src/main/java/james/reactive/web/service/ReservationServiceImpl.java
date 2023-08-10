@@ -65,8 +65,6 @@ public class ReservationServiceImpl implements ReservationService {
         applicationContext.getBean(mongoDWrapperClass));
     } catch (ClassNotFoundException e) {
       log.info("No Embedded MongoDB in classpath, skip!");
-      Exception exception = new RuntimeException("Test");
-      log.error("Unknown error: {}", exception.getMessage(), exception);
     } catch (Exception exception) {
       log.error("Unknown error: {}", exception.getMessage(), exception);
     }
