@@ -6,6 +6,8 @@ management:
   endpoint:
     shutdown:
       enabled: 'true'
+  server:
+    port: 8082
 spring:
   reactor:
     netty:
@@ -21,7 +23,7 @@ spring:
   application:
     name: warehouse-service
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
     group-id: reservation
 logging:
   level:
@@ -35,4 +37,4 @@ server:
 zipkin:
   enabled: true
   server:
-    url: http://127.0.0.1:9411/api/v2/spans
+    url: ${ZIPKIN_SERVER_URL:http://127.0.0.1:9411/api/v2/spans}

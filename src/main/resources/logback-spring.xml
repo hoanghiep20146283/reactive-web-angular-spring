@@ -22,6 +22,10 @@
       </providers>
     </encoder>
     <file>C://logs/reservation-app.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOGS_HOME}/app-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <maxHistory>7</maxHistory> <!-- Number of retained log files -->
+    </rollingPolicy>
   </appender>
 
   <logger name="james.reactive.web" additivity="false" level="info">

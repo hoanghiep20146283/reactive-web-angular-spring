@@ -17,7 +17,7 @@ management:
     port: 8081
 spring:
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
   reactor:
     netty:
       shutdown-quiet-period: 1s
@@ -25,8 +25,9 @@ spring:
     mongodb:
       username: james
       password: '1234'
-      port: ${MONGO_PORT:27022}
+      port: ${MONGO_PORT:27023}
       host: ${MONGO_HOST:localhost}
+      authentication-database: admin
   zipkin:
     sender:
       type: WEB
@@ -53,5 +54,5 @@ de:
 zipkin:
   enabled: true
   server:
-    url: http://127.0.0.1:9411/api/v2/spans
-warehouse.endpoint.url: http://127.0.0.1:8084
+    url: ${ZIPKIN_SERVER_URL:http://127.0.0.1:9411/api/v2/spans}
+warehouse.endpoint.url: ${WAREHOUSE_SERVICE_URL:http://127.0.0.1:8084}

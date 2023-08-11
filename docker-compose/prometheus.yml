@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 15s
+  external_labels:
+    monitor: 'james-monitor'
+
+scrape_configs:
+  - job_name: 'spring-boot-app'
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['reservation-app:8081']
