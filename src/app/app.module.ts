@@ -8,6 +8,7 @@ import { ChildComponent } from './child.component';
 import {injectTokens, injectTokenValues} from './providers';
 import { routing } from './app.routing';
 import { RoutingComponent } from './routing.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 const lookupLists = ['Movies'];
 
@@ -16,6 +17,7 @@ const lookupLists = ['Movies'];
         RoutingComponent,
         AppComponent,
         ChildComponent,
+        UserListComponent,
     ],
     imports: [
         BrowserModule,

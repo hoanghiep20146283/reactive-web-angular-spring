@@ -5,6 +5,7 @@ import { MediaItemService } from './media-item.services';
 import { MediaItem } from './media-item.model';
 import { injectTokens } from './providers';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { WebStorageService } from './services/web-storage.service';
 
 @Component({
   selector: 'app-root',
