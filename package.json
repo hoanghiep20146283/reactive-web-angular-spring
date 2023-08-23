@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
+    "test:lib": "jest",
     "precommit": "run-s format:fix lint",
     "format:fix": "pretty-quick --staged"
   },
@@ -53,6 +54,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ng-packagr": "^16.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.0.1",
     "pretty-quick": "^3.1.3",

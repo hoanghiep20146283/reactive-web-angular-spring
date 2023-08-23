@@ -4,6 +4,8 @@ import static james.reactive.web.controller.ReservationController.V1_URL_RESERVA
 
 import james.reactive.web.model.Reservation;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,16 @@ import reactor.core.publisher.Mono;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestInstance(Lifecycle.PER_CLASS)
 class ReservationControllerTest {
+
+  public static void main(String[] args) {
+    // Create a HashMap with a null key
+    HashMap<String, Integer> hashMap = new HashMap<>();
+    hashMap.put(null, 42);
+
+    // Retrieve the value associated with the null key
+    Integer value = hashMap.get(null);
+    System.out.println("Value associated with null key: " + value);
+  }
 
   @Autowired
   private ApplicationContext applicationContext;
