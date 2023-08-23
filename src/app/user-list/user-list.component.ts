@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserListService } from '../services/user-list.service';
 import { WebStorageService } from '../services/web-storage.service';
 import { User, USERS_KEY } from '../models/user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
@@ -9,7 +10,8 @@ import { User, USERS_KEY } from '../models/user';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  public users: User[] = [];
+  public users: Promise<User[]> | null = null;
+  public filterString: string | null = null;
 
   constructor(
     private userListService: UserListService,
@@ -17,12 +19,20 @@ export class UserListComponent implements OnInit {
   ) { }
 
   public async ngOnInit(): Promise<void> {
-    const filtered = this.webStorageService.get(USERS_KEY);
-    this.users = (filtered === null) ? await this.userListService.getAll() : JSON.parse(filtered);
+    this.webStorageService.getFilterString().subscribe({
+      next: filterString => {
+        this.filterString = filterString;
+        this.users = (filterString === null) ? this.userListService.getAll() : this.userListService.filter(filterString);
+      },
+      error: err => console.error('ngOnInit Error', err),
+      complete: () => console.error('ngOnInit Complete!'),
+    });
   }
 
   public async update(text: string): Promise<void> {
-    this.users = await this.userListService.filter(text);
-    this.webStorageService.set(USERS_KEY, JSON.stringify(this.users));
+    this.webStorageService.setFilterString(text).subscribe(filterString => {
+      this.filterString = filterString;
+      this.users = (filterString === null) ? this.userListService.getAll() : this.userListService.filter(filterString);
+    });
   }
 }

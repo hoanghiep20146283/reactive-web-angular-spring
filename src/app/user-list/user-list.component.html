@@ -5,6 +5,7 @@
     placeholder="Find Users by Name"
     #filter
     (keyup)="update(filter.value)"
+    [(ngModel)]="filterString"
   />
 
   <span class="input-group-btn">
@@ -20,8 +21,8 @@
 
 <ul class="user-list">
   <li
-    *ngFor="let user of users"
+    *ngFor="let user of users | async"
     class="user-list-item"
-    [innerHtml]="user.name"
+    [innerHtml]="user.name | highlightText: filter.value"
   ></li>
 </ul>

@@ -13,7 +13,7 @@ import { WebStorageService } from './services/web-storage.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  exampleInput: string = "Example Input";
+  exampleInput = "Example Input";
   title = 'reservation-app';
   rooms!: Room[];
   roomSearchForm!: FormGroup;
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
 
   onSubmitMediaItem(mediaItem: any) {
     console.log('MediaItem submitted:', mediaItem);
-  
+
   }
 
   ngOnInit() {
@@ -84,8 +84,9 @@ export class AppComponent implements OnInit {
     this.roomSearchForm.valueChanges.subscribe(form => {
       this.currentCheckIn = form.checkIn;
       this.currentCheckOut = form.checkOut;
-      if (form.roomNumber) {
-        let roomValues: string[] = form.roomNumber.split('|');
+      if (form.roomNumber)
+      {
+        const roomValues: string[] = form.roomNumber.split('|');
         this.currentRoomNumber = roomValues[0];
         this.currentPrice = Number(roomValues[1]);
       }
@@ -96,8 +97,9 @@ export class AppComponent implements OnInit {
 
     // Listen route change event
     this.activatedRoute.paramMap.subscribe(paramMap => {
-      let roomNumbers = paramMap.get('roomNumber');
-      if(roomNumbers) {
+      const roomNumbers = paramMap.get('roomNumber');
+      if (roomNumbers)
+      {
         const jsonString = JSON.stringify(roomNumbers);
         console.log(`Room Numbers: ${roomNumbers}`)
       }

@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { ChildComponent } from './child.component';
-import {injectTokens, injectTokenValues} from './providers';
+import { injectTokens, injectTokenValues } from './providers';
 import { routing } from './app.routing';
 import { RoutingComponent } from './routing.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { HighlightTextPipe } from './pipes/highlight-text.pipe';
+import { HttpRequestInterceptorService } from './mocks/http-request-interceptor.service';
 
 const lookupLists = ['Movies'];
 
@@ -18,6 +20,7 @@ const lookupLists = ['Movies'];
         AppComponent,
         ChildComponent,
         UserListComponent,
+        HighlightTextPipe,
     ],
     imports: [
         BrowserModule,
@@ -28,8 +31,9 @@ const lookupLists = ['Movies'];
         routing
     ],
     providers: [
-        {provide: 'lookupList', useValue: lookupLists},
-        {provide: injectTokens, useValue: injectTokenValues}
+        { provide: 'lookupList', useValue: lookupLists },
+        { provide: injectTokens, useValue: injectTokenValues },
+        { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptorService, multi: true },
     ],
     bootstrap: [RoutingComponent]
 })

@@ -9,7 +9,10 @@ export class HighlightTextPipe implements PipeTransform {
     if(filter.length === 0) {
       return value;
     }
-    return value.replace(filter, 'x');
+    // ig: ignore case and global
+    const search = new RegExp(filter, 'ig');
+
+    return value.replace(search, match => `<span class="highlight-text">${match}</span>`);
   }
 
 }

@@ -7,7 +7,7 @@ import { User, USERS } from '../models/user';
 export class UserListService {
 
   public async getAll(): Promise<User[]> {
-    return Promise.resolve(USERS);;
+    return Promise.resolve(USERS);
   }
 
   public async filter(text: string): Promise<User[]> {
