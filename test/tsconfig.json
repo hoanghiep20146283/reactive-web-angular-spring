@@ -1,12 +1,21 @@
 {
     "compilerOptions": {
         "moduleResolution": "node",
+        "incremental": true,
+        "target": "ESNext",
+        "module": "ESNext",
+        "allowJs": true,
+        "checkJs": false,
+        "sourceMap": true,
+        "strict": true,
+        "alwaysStrict": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
         "types": [
             "node",
             "webdriverio/async",
             "@wdio/jasmine-framework",
             "expect-webdriverio"
         ],
-        "target": "es2019"
     }
 }

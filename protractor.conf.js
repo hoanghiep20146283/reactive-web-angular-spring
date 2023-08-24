@@ -9,9 +9,14 @@ const { SpecReporter, StacktraceOption } = require("jasmine-spec-reporter");
  */
 exports.config = {
   allScriptsTimeout: 11000,
-  specs: ["./test/**/*.e2e.ts"],
+  specs: ["./test/**/*.e2e.js"],
   capabilities: {
     browserName: "chrome",
+    chromeOptions: {
+      args: ["--disable-extensions --disable-web-security"],
+      binary:
+        "C:\\Users\\ADMIN\\Documents\\SideProjects\\reactive-web-angular-spring\\chrome-win\\chrome.exe",
+    },
   },
   directConnect: true,
   SELENIUM_PROMISE_MANAGER: false,
