@@ -131,3 +131,4 @@ nb-configuration.xml
 .DS_Store
 .nx/installation
 .nx/cache
+.angular
