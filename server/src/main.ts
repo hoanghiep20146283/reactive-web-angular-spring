@@ -1,14 +1,10 @@
-import express from 'express';
+import { ServerOptions } from "ws"
+import { WsHandler } from "./ws-handler";
 
-const host = process.env.HOST ?? 'localhost';
-const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+function main() {
+  const options: ServerOptions = {port: 8081};
+  const handler = new WsHandler();
+  handler.initialize(options);
+}
 
-const app = express();
-
-app.get('/', (req, res) => {
-  res.send({ message: 'Hello API' });
-});
-
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
-});
+main()

@@ -1,0 +1,8 @@
+<app-nx-welcome></app-nx-welcome>
+<div class="login-state">
+    {{ currentUser | json }}
+</div>
+
+<div *ngFor="let message of messages" class="chat-area">
+<pre> {{message | json}}</pre>
+</div>
