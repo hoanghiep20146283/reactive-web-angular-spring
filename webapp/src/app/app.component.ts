@@ -1,15 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { ChatRelayMessage, SystemNotice, User } from 'types';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppService } from './app.service';
 
 @Component({
-  standalone: true,
-  imports: [NxWelcomeComponent, CommonModule, MatCardModule, MatInputModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
