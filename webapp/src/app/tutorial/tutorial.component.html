@@ -32,3 +32,8 @@
   <button (click)="routeByClass()">Route By Class</button>
   <p>Activated Account Type: {{ accountType }}</p>
 </div>
+
+<div>
+  <h3>ngFor Example</h3>
+  <app-directive-examples *ngFor="let cardItem of cardList" [card]="cardItem"></app-directive-examples>
+</div>

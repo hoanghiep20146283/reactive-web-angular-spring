@@ -7,9 +7,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TutorialComponent } from './tutorial.component';
 import { AppRoutingModule } from '../app.routing';
 import { PopupComponent } from './popup/popup.component';
+import { DirectiveExamplesComponent } from './directive-examples/directive-examples.component';
 
 @NgModule({
-  declarations: [TutorialComponent, PopupComponent],
+  declarations: [TutorialComponent, PopupComponent, DirectiveExamplesComponent],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,

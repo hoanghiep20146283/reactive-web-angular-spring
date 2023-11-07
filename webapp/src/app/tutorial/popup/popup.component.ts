@@ -7,7 +7,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class PopupComponent {
   showPopup = false;
-  @Input() inputPropertyExample: string;
+  @Input() inputPropertyExample!: string;
   @Output() clickStatus = new EventEmitter();
 
   displayContent = "This is a popup that will disappear after 2 seconds!";
