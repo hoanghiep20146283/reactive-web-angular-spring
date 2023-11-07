@@ -4,6 +4,27 @@
 </div>
 
 <div>
+  <h3>Property Binding Example</h3>
+  <p [textContent]="textContent"></p>
+</div>
+
+<div>
+  <h3>Event Binding Example</h3>
+  <app-popup></app-popup>
+</div>
+
+<div>
+  <h3>Input Property Example</h3>
+  <app-popup [inputPropertyExample]="inputPropertySource"></app-popup>
+</div>
+
+<div>
+  <h3>@Ouput: Binding component events Example</h3>
+  <app-popup (clickStatus)="onClick($event)"></app-popup>
+  <p>{{ clickStatus }} </p>
+</div>
+
+<div>
   <h3>Route Query Param Example</h3>
   <a [routerLink]="['/tutorial/account', 1]" [queryParams]="{ type: 'student' }">
     <p>Account 1</p>

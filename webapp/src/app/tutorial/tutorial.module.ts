@@ -5,12 +5,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TutorialComponent } from './tutorial.component';
-import { AppRoutingModule } from '../app-routing.module';
+import { AppRoutingModule } from '../app.routing';
+import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
-  declarations: [
-    TutorialComponent
+  declarations: [TutorialComponent, PopupComponent],
+  imports: [
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    MatCardModule,
+    MatInputModule,
+    AppRoutingModule,
   ],
-  imports: [AppRoutingModule, BrowserAnimationsModule, BrowserModule, MatCardModule, MatInputModule, AppRoutingModule],
 })
-export class TutorialModule { }
+export class TutorialModule {}

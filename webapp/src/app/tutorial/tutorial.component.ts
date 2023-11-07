@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
 export class TutorialComponent implements OnInit {
     title = 'I am Angular';
     accountType = "Not selected";
+    textContent = "Property Binding Example"
+    showPopup = false;
+    inputPropertySource = "Input Property Binding Example";
+    clickStatus = "Not yet";
 
     messages: ChatRelayMessage[] = []
     users: User[] = []
@@ -35,5 +39,9 @@ export class TutorialComponent implements OnInit {
 
     routeByClass() {
         this.router.navigate(['/tutorial/routeClass']);
+    }
+
+    onClick(displayContent: string) {
+        console.log(`Display content: ${displayContent}`);
     }
 }
