@@ -1,0 +1,13 @@
+<div>
+  <h3>Interpolation Example</h3>
+  <p>{{ interpolationExample() }}</p>
+</div>
+
+<div>
+  <h3>Route Query Param Example</h3>
+  <a [routerLink]="['/tutorial/account', 1]" [queryParams]="{ type: 'student' }">
+    <p>Account 1</p>
+  </a>
+  <button (click)="routeByClass()">Route By Class</button>
+  <p>Activated Account Type: {{ accountType }}</p>
+</div>

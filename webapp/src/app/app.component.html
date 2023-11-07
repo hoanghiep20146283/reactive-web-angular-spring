@@ -1,28 +1,39 @@
 <div class="login-state" [ngSwitch]="currentUser === undefined">
-    <ng-container *ngSwitchCase="true">
-      <mat-form-field appearance="fill">
-        <input #userName matInput placeholder="What's on your name?">
-      </mat-form-field>
-
-      <button (click)="connect(userName)" mat-raised-button color="primary">Connect</button>
-    </ng-container>
-  
-    <ng-container *ngSwitchCase="false">
-      <h3>Logged in as: {{currentUser.name}} </h3>
-    </ng-container>
-  
-  </div>
-  
-  <div class="chat-area">
-    <mat-card *ngFor="let message of messages" [class.current-user]="message.author.id === currentUser?.id">
-      <p> {{message.author.name}} </p>
-      <pre> {{message.contents}} </pre>
-    </mat-card>
-  </div>
-  
-  <div class="chat-input">
-    <mat-form-field appearance="outline">
-      <input #chatInput matInput placeholder="What's on your mind?">
+  <ng-container *ngSwitchCase="true">
+    <mat-form-field appearance="fill">
+      <input #userName matInput placeholder="What's on your name?" />
     </mat-form-field>
-  </div>
-  
+
+    <button (click)="connect(userName)" mat-raised-button color="primary">
+      Connect
+    </button>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="false">
+    <h3>Logged in as: {{ currentUser.name }}</h3>
+  </ng-container>
+</div>
+
+<div class="chat-area">
+  <mat-card *ngFor="let message of messages" [class.current-user]="message.author.id === currentUser?.id">
+    <p>{{ message.author.name }}</p>
+    <pre> {{ message.contents }} </pre>
+  </mat-card>
+</div>
+
+<div class="chat-input">
+  <mat-form-field appearance="outline">
+    <input #chatInput matInput placeholder="What's on your mind?" />
+  </mat-form-field>
+</div>
+
+<div class="angular-route">
+  <a routerLink="/tutorial">
+    <h3>Angular Route Example</h3>
+  </a>
+  <img src="../assets/angular_route.png" />
+</div>
+
+<div class="tutorial-list">
+  <router-outlet></router-outlet>
+</div>

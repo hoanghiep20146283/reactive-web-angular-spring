@@ -14,7 +14,11 @@ export class AppComponent implements OnInit {
   messages: ChatRelayMessage[] = []
   users: User[] = []
   currentUser: User
-
+  
+  interpolationExample() {
+    return "Interpolation Example Method";
+  }
+  
   constructor(private appService: AppService, private snackbar: MatSnackBar) {
   }
 
