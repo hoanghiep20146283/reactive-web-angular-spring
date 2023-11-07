@@ -3,19 +3,19 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TutorialComponent } from './tutorial.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TutorialModule } from './tutorial/tutorial.module';
 
 @NgModule({
   declarations: [
-    AppComponent, TutorialComponent
+    AppComponent,
   ],
-  imports: [BrowserAnimationsModule, BrowserModule, MatCardModule, MatInputModule, AppRoutingModule],
-  providers: [ AppService, MatSnackBar],
+  imports: [TutorialModule, BrowserAnimationsModule, BrowserModule, MatCardModule, MatInputModule, AppRoutingModule],
+  providers: [AppService, MatSnackBar],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
