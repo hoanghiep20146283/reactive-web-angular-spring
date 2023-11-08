@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Card } from '../../card.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,11 @@ export class CardService {
     new Card('Card 3', 3),
   ];
 
-  get() {
-    return this.cardList;
+  constructor(private httpClient: HttpClient) { }
+
+  get() : Observable<Card[]> {
+    return this.httpClient.get<CardListResponse>('cards')
+      .pipe(map(response => { return response.cardList }));
   }
 
   add(card: Card) {
@@ -26,4 +31,8 @@ export class CardService {
       this.cardList.splice(index, 1);
     }
   }
+}
+
+interface CardListResponse {
+  cardList: Card[];
 }

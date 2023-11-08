@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router'
 import { Router } from '@angular/router';
 import { CardService } from './services/card-service.service';
 import { injectTokenExample } from '../injectToken.providers';
+import { Card } from '../card.model';
 
 @Component({
     selector: 'app-tutorial',
@@ -21,14 +22,16 @@ export class TutorialComponent implements OnInit {
     messages: ChatRelayMessage[] = []
     users: User[] = []
     currentUser: User
-    cardList;
+    cardList: Card[];
 
     interpolationExample() {
         return "Interpolation Example Method";
     }
-    constructor(private activatedRoute: ActivatedRoute, private router: Router,
-        private cardService: CardService, @Inject(injectTokenExample) public injectDecoratorExample: string) {
-        this.cardList = cardService.get();
+    constructor(private activatedRoute: ActivatedRoute,
+        private router: Router,
+        private cardService: CardService,
+        @Inject(injectTokenExample) public injectDecoratorExample: string) {
+        this.cardService.get().subscribe(cardList => this.cardList = cardList);
     }
 
     ngOnInit(): void {

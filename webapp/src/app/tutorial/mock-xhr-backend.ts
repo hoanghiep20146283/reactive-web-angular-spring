@@ -10,6 +10,10 @@ export class MockXHRBackend implements HttpBackend {
         {
             id: 2,
             name: 'Card 2',
+        },
+        {
+            id: 2,
+            name: 'Card 2',
         }
     ];
 
@@ -18,7 +22,7 @@ export class MockXHRBackend implements HttpBackend {
             let responseOptions;
             switch (request.method) {
                 case 'GET':
-                    if (request.urlWithParams.indexOf('cardList?name=') >= 0 || request.url === 'cardList') {
+                    if (request.urlWithParams.indexOf('cards?name=') >= 0 || request.url === 'cards') {
                         let name;
                         if (request.urlWithParams.indexOf('?') >= 0) {
                             name = request.urlWithParams.split('=')[1];
