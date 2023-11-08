@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CardService } from '../../services/card-service.service';
+import { Card } from '../../../card.model';
 
 @Component({
   selector: 'app-reactive-form',
@@ -9,7 +11,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class ReactiveFormComponent implements OnInit {
   reactiveForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private cardService: CardService) { }
 
   ngOnInit(): void {
     this.reactiveForm = this.formBuilder.group({
@@ -18,7 +20,7 @@ export class ReactiveFormComponent implements OnInit {
   }
 
   nameValidator(control: FormControl): { [key: string]: string } | null {
-    if (control.value.trim().length == 0) {
+    if (control.value && control.value.trim().length == 0) {
       return null;
     }
     const hasNumber = /\d/.test(control.value);
@@ -31,6 +33,10 @@ export class ReactiveFormComponent implements OnInit {
   onSubmit() {
     if (this.reactiveForm.valid) {
       console.log('Form submitted with data:', this.reactiveForm.value);
+      const newCard: Card = this.reactiveForm.value;
+      newCard.id = Math.random();
+      this.cardService.add(newCard);
+      this.reactiveForm.reset();
     }
   }
 }

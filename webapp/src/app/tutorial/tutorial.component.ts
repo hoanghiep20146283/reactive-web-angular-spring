@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ChatRelayMessage, User } from 'types';
 import { ActivatedRoute } from '@angular/router'
 import { Router } from '@angular/router';
-import { Card } from '../card.model';
+import { CardService } from './services/card-service.service';
 
 @Component({
     selector: 'app-tutorial',
@@ -20,16 +20,15 @@ export class TutorialComponent implements OnInit {
     messages: ChatRelayMessage[] = []
     users: User[] = []
     currentUser: User
-    cardList: Card[] = [
-        new Card('Card 1', 1),
-        new Card('Card 2', 2),
-        new Card('Card 3', 3),
-    ];
+    cardList;
 
     interpolationExample() {
         return "Interpolation Example Method";
     }
-    constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
+    constructor(private activatedRoute: ActivatedRoute, private router: Router,
+        private cardService: CardService, @Inject('injectDecoratorExample') public injectDecoratorExample: string) {
+        this.cardList = cardService.get();
+    }
 
     ngOnInit(): void {
         this.accountType = "Not selected";

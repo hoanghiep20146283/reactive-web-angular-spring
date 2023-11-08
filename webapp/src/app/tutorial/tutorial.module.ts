@@ -13,6 +13,7 @@ import { CustomPipePipe } from './directive-examples/custom-pipe.pipe';
 import { TemplateDrivenFormComponent } from './form/template-driven-form/template-driven-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReactiveFormComponent } from './form/reactive-form/reactive-form.component';
+import { CardService } from './services/card-service.service';
 
 @NgModule({
   declarations: [
@@ -34,5 +35,6 @@ import { ReactiveFormComponent } from './form/reactive-form/reactive-form.compon
     FormsModule,
     ReactiveFormsModule,
   ],
+  providers: [CardService]
 })
-export class TutorialModule {}
+export class TutorialModule { }

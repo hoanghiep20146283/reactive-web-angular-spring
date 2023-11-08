@@ -2,7 +2,7 @@
   <label for="name">Card Name:</label>
   <input type="text" id="name" name="name" formControlName="name" />
 
-  <button type="submit" [disabled]="!reactiveForm.valid">Submit</button>
+  <button type="submit" [disabled]="!reactiveForm.valid">Add Card</button>
   <div *ngIf="reactiveForm.get('name').errors as nameErrors">
     {{ nameErrors.containNumber }}
   </div>
