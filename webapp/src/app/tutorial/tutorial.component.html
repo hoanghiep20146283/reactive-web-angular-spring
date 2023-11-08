@@ -21,12 +21,15 @@
 <div>
   <h3>@Ouput: Binding component events Example</h3>
   <app-popup (clickStatus)="onClick($event)"></app-popup>
-  <p>{{ clickStatus }} </p>
+  <p>{{ clickStatus }}</p>
 </div>
 
 <div>
   <h3>Route Query Param Example</h3>
-  <a [routerLink]="['/tutorial/account', 1]" [queryParams]="{ type: 'student' }">
+  <a
+    [routerLink]="['/tutorial/account', 1]"
+    [queryParams]="{ type: 'student' }"
+  >
     <p>Account 1</p>
   </a>
   <button (click)="routeByClass()">Route By Class</button>
@@ -34,6 +37,28 @@
 </div>
 
 <div>
-  <h3>ngFor Example</h3>
-  <app-directive-examples *ngFor="let cardItem of cardList" [card]="cardItem"></app-directive-examples>
+  <h3>ngFor, ngClass (Attribute Directive) Example</h3>
+  <app-directive-examples
+    *ngFor="let cardItem of cardList"
+    [card]="cardItem"
+    [ngClass]="{ 'first-card': cardItem.id === 1 }"
+  ></app-directive-examples>
+</div>
+
+<div>
+  <h3>Custom Attribute Directive Example</h3>
+  <app-directive-examples
+    [appCustomDirectiveExamples]="cardList[0].name"
+    [card]="cardList[0]"
+  ></app-directive-examples>
+</div>
+
+<div>
+  <h3>Pipe Examples</h3>
+  <p>{{ cardList[0].name | slice : 0 : 4 }}</p>
+</div>
+
+<div>
+  <h3>Custom Pipe Examples</h3>
+  <p>{{ cardList[0].name | customPipe: 3 }}</p>
 </div>

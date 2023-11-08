@@ -14,7 +14,8 @@ import { TutorialModule } from './tutorial/tutorial.module';
   declarations: [
     AppComponent,
   ],
-  imports: [TutorialModule, BrowserAnimationsModule, BrowserModule, MatCardModule, MatInputModule, AppRoutingModule],
+  imports: [TutorialModule, BrowserAnimationsModule, BrowserModule,
+    MatCardModule, MatInputModule, AppRoutingModule],
   providers: [AppService, MatSnackBar],
   bootstrap: [AppComponent]
 })
