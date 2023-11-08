@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ChatRelayMessage, User } from 'types';
+import { ChatMessage, User } from 'types';
 import { ActivatedRoute } from '@angular/router'
 import { Router } from '@angular/router';
 import { CardService } from './services/card-service.service';
@@ -19,7 +19,7 @@ export class TutorialComponent implements OnInit {
     inputPropertySource = "Input Property Binding Example";
     clickStatus = "Not yet";
     firstCardName = "undefined";
-    messages: ChatRelayMessage[] = []
+    messages: ChatMessage[] = []
     users: User[] = []
     currentUser: User
     cardList: Card[];

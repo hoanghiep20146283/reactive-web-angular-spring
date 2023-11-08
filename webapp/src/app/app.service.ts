@@ -1,25 +1,26 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { ChatMessage, ChatRelayMessage, SystemNotice, User, WsMessage } from 'types';
+import { ChatMessage, SystemNotice, User, WsMessage } from 'types';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 @Injectable()
 export class AppService {
   user$ = new BehaviorSubject<User>(undefined)
   socket: WebSocketSubject<WsMessage>
-  chatMessage$ = new Subject<ChatRelayMessage>()
+  chatMessage$ = new Subject<ChatMessage>()
   systemNotice$ = new Subject<SystemNotice>()
   userList$ = new BehaviorSubject<User[]>([])
 
   connect(name: string) {
-    this.socket = webSocket(`ws://localhost:8080?name=${name}`)
+    this.socket = webSocket(`ws://localhost:8081?name=${name}`)
     this.socket.subscribe(message => this.onMessageFromServer(message))
   }
 
-  send(contents: string) {
+  send(contents: string, author: User) {
     const chatMsg: ChatMessage = {
       event: 'chat',
-      contents
+      contents,
+      author,
     }
     this.socket.next(chatMsg)
   }
@@ -31,7 +32,7 @@ export class AppService {
         this.user$.next(message.user)
         break;
       }
-      case 'chatRelay': {
+      case 'chat': {
         this.chatMessage$.next(message)
         break;
       }

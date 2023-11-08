@@ -1,5 +1,5 @@
 import { IncomingMessage } from "http";
-import { SystemNotice, User, WsMessage } from "types";
+import { ChatMessage, SystemNotice, User, WsMessage } from "types";
 import { WebSocket } from "ws";
 
 let currId = 1;
@@ -20,7 +20,7 @@ export class UserManager {
             contents: `${name} has joined the chat`,
         }
 
-        this.sendAll(systemNotice);
+        this.sendSystemNotice(systemNotice);
         this.sockets.set(socket, user);
     }
 
@@ -33,7 +33,17 @@ export class UserManager {
         socket.send(data);
     }
 
-    sendAll(message: WsMessage) {
+    sendSystemNotice(message: SystemNotice) {
+        const data = JSON.stringify(message);
+        console.log(`Number of sockets: ${this.sockets.size}`);
+        Array.from(this.sockets.keys()).forEach(socket => {
+            if (socket.readyState == WebSocket.OPEN) {
+                socket.send(data);
+            }
+        })
+    }
+
+    sendAll(message: ChatMessage) {
         const data = JSON.stringify(message);
         console.log(`Number of sockets: ${this.sockets.size}`);
         Array.from(this.sockets.keys()).forEach(socket => {

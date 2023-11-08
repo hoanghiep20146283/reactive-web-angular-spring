@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatRelayMessage, SystemNotice, User } from 'types';
+import { ChatMessage, SystemNotice, User } from 'types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppService } from './app.service';
 
@@ -11,7 +11,7 @@ import { AppService } from './app.service';
 export class AppComponent implements OnInit {
   title = 'I am Angular';
 
-  messages: ChatRelayMessage[] = []
+  messages: ChatMessage[] = []
   users: User[] = []
   currentUser: User
   
@@ -33,10 +33,11 @@ export class AppComponent implements OnInit {
     const name = userNameInput.value
     console.log(`Connecting as ${name}`)
     this.appService.connect(name)
+    this.currentUser = { id: 1, name: name};
   }
 
   send(chatInput: HTMLInputElement) {
-    this.appService.send(chatInput.value)
+    this.appService.send(chatInput.value, this.currentUser)
     chatInput.value = ''
   }
 

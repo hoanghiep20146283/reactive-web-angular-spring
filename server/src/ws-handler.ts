@@ -2,7 +2,7 @@ import { Socket } from 'dgram';
 import { IncomingMessage } from 'http';
 import { WebSocket, WebSocketServer, ServerOptions, RawData } from 'ws'
 import { UserManager } from './user-manager';
-import { WsMessage } from 'types';
+import { ChatMessage, WsMessage } from 'types';
 
 export class WsHandler {
     private wsServer: WebSocketServer;
@@ -23,8 +23,9 @@ export class WsHandler {
     }
 
     private onSocketMessage(socket: WebSocket, data: RawData) {
-        const payload: WsMessage = JSON.parse(`${data}`);
-        console.log(`Received: ${payload}`);
+        console.log(`Data: ${data}`);
+        const payload: ChatMessage = JSON.parse(`${data}`);
+        console.log(`Received: ${JSON.stringify(payload)}`);
         this.userManager.sendAll(payload);
     }
 

@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 })
 export class TypesModule { }
 
-export type WsMessage = ChatRelayMessage | ChatMessage | SystemNotice | LoginMessage | UserListMessage;
+export type WsMessage = ChatMessage | SystemNotice | LoginMessage | UserListMessage;
 
 export interface User {
   name: string,
@@ -15,11 +15,6 @@ export interface User {
 
 export interface ChatMessage {
   event: 'chat',
-  contents: string
-}
-
-export interface ChatRelayMessage {
-  event: 'chatRelay',
   contents: string,
   author: User,
 }
