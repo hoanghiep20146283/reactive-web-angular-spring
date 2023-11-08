@@ -1,0 +1,9 @@
+<form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+  <label for="name">Card Name:</label>
+  <input type="text" id="name" name="name" formControlName="name" />
+
+  <button type="submit" [disabled]="!reactiveForm.valid">Submit</button>
+  <div *ngIf="reactiveForm.get('name').errors as nameErrors">
+    {{ nameErrors.containNumber }}
+  </div>
+</form>

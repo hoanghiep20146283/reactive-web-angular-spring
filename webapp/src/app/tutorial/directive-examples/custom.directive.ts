@@ -5,6 +5,6 @@ export class CustomDirective {
     @HostBinding('class') customName = 'undefined';
 
     @Input() set appCustomDirectiveExamples(value) {
-        this.customName = value;
+        this.customName = value + "-CustomDirectiveValue";
     }
 }

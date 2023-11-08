@@ -10,6 +10,9 @@ import { PopupComponent } from './popup/popup.component';
 import { DirectiveExamplesComponent } from './directive-examples/directive-examples.component';
 import { CustomDirective } from './directive-examples/custom.directive';
 import { CustomPipePipe } from './directive-examples/custom-pipe.pipe';
+import { TemplateDrivenFormComponent } from './form/template-driven-form/template-driven-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormComponent } from './form/reactive-form/reactive-form.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,8 @@ import { CustomPipePipe } from './directive-examples/custom-pipe.pipe';
     DirectiveExamplesComponent,
     CustomDirective,
     CustomPipePipe,
+    TemplateDrivenFormComponent,
+    ReactiveFormComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -26,6 +31,8 @@ import { CustomPipePipe } from './directive-examples/custom-pipe.pipe';
     MatCardModule,
     MatInputModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class TutorialModule {}
