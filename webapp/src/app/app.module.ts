@@ -10,22 +10,36 @@ import { AppService } from './app.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TutorialModule } from './tutorial/tutorial.module';
 import { FormsModule } from '@angular/forms';
-import { injectTokenExample, injectDecoratorExample } from './injectToken.providers';
+import {
+  injectTokenExample,
+  injectDecoratorExample,
+} from './injectToken.providers';
 import { MockXHRBackend } from './tutorial/mock-xhr-backend';
 
 @NgModule({
-  declarations: [
-    AppComponent,
+  declarations: [AppComponent],
+  imports: [
+    TutorialModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    MatCardModule,
+    MatInputModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
   ],
-  imports: [TutorialModule, BrowserAnimationsModule, BrowserModule,
-    MatCardModule, MatInputModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [AppService, MatSnackBar,
+  providers: [
+    AppService,
+    MatSnackBar,
     {
-      provide: injectTokenExample, useValue: injectDecoratorExample
+      provide: injectTokenExample,
+      useValue: injectDecoratorExample,
     },
     {
-      provide: HttpXhrBackend, useClass: MockXHRBackend
-    }],
-  bootstrap: [AppComponent]
+      provide: HttpXhrBackend,
+      useClass: MockXHRBackend,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

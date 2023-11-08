@@ -1,0 +1,12 @@
+.custom-style {
+    font-family: 'Arial';
+}
+
+:host {
+    display: block;
+    background-color: rgb(255, 255, 233);
+}
+
+:host-context(.host-context-example) > h4 {
+    color: blue;
+}

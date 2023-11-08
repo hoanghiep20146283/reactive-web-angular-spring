@@ -14,6 +14,9 @@ import { TemplateDrivenFormComponent } from './form/template-driven-form/templat
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReactiveFormComponent } from './form/reactive-form/reactive-form.component';
 import { CardService } from './services/card-service.service';
+import { EncapsulationShadowDomExampleComponent } from './encapsulation-shadow-dom-example/encapsulation-shadow-dom-example.component';
+import { EncapsulationNoneExampleComponent } from './encapsulation-none-example/encapsulation-none-example.component';
+import { EncapsulationEmulatedExampleComponent } from './encapsulation-emulated-example/encapsulation-emulated-example.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,10 @@ import { CardService } from './services/card-service.service';
     CustomPipePipe,
     TemplateDrivenFormComponent,
     ReactiveFormComponent,
+    EncapsulationNoneExampleComponent,
+    EncapsulationShadowDomExampleComponent,
+    EncapsulationEmulatedExampleComponent,
+    EncapsulationEmulatedExampleComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -35,6 +42,6 @@ import { CardService } from './services/card-service.service';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [CardService]
+  providers: [CardService],
 })
-export class TutorialModule { }
+export class TutorialModule {}

@@ -18,7 +18,7 @@ export class TutorialComponent implements OnInit {
     showPopup = false;
     inputPropertySource = "Input Property Binding Example";
     clickStatus = "Not yet";
-
+    firstCardName = "undefined";
     messages: ChatRelayMessage[] = []
     users: User[] = []
     currentUser: User
@@ -32,6 +32,9 @@ export class TutorialComponent implements OnInit {
         private cardService: CardService,
         @Inject(injectTokenExample) public injectDecoratorExample: string) {
         this.cardService.get().subscribe(cardList => this.cardList = cardList);
+        this.cardService.getById(1)
+            .subscribe(firstCard =>
+                this.firstCardName = firstCard.name);
     }
 
     ngOnInit(): void {
@@ -44,10 +47,15 @@ export class TutorialComponent implements OnInit {
         if (childRoute && childRoute.params) {
             childRoute.params.forEach(param => console.log(`Child param: ${param}`))
         }
+
     }
 
     routeByClass() {
         this.router.navigate(['/tutorial/routeClass']);
+    }
+
+    getFirstCardName() {
+        return this.firstCardName;
     }
 
     onClick(displayContent: string) {

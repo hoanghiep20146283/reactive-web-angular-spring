@@ -1,0 +1,16 @@
+<div>
+  <h4>ViewEncapsulation.Emulated</h4>
+  <p class="custom-style host-context-example">
+    <b>Emulated</b> One of the drawbacks of shadow Dom is that it is not
+    implemented in all browser vendors. The Angular framework fills that gap
+    with its emulated view encapsulation mode, which is the default mode used
+    when you don't specify a view in encapsulation
+    <br />
+    In emulated mode, Angular is doing things with the CSS to encapsulate it to
+    the component and its view contents. During the build, Angular run some
+    pre-processing logic that will shim both the final CSS output and the
+    template markup output to include some additional attributes that mimic the
+    standard shadow CSS scoping rules
+  </p>
+</div>
+<h4>Host Content Example: color should be blue</h4>

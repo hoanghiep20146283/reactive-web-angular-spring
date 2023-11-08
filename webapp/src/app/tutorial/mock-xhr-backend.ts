@@ -22,7 +22,23 @@ export class MockXHRBackend implements HttpBackend {
             let responseOptions;
             switch (request.method) {
                 case 'GET':
-                    if (request.urlWithParams.indexOf('cards?name=') >= 0 || request.url === 'cards') {
+                    if (request.urlWithParams.indexOf('cards?id=') >= 0) {
+                        let id;
+                        if (request.urlWithParams.indexOf('?') >= 0) {
+                            id = request.urlWithParams.split('=')[1];
+                            if (id === 'undefined') { id = ''; }
+                        }
+                        let cardList;
+                        if (id) {
+                            cardList = this.cardList.filter(card => card.id === parseInt(id));
+                        } else {
+                            cardList = this.cardList;
+                        }
+                        responseOptions = {
+                            body: { cardList: JSON.parse(JSON.stringify(cardList)) },
+                            status: 200
+                        };
+                    } else if (request.urlWithParams.indexOf('cards?name=') >= 0 || request.url === 'cards') {
                         let name;
                         if (request.urlWithParams.indexOf('?') >= 0) {
                             name = request.urlWithParams.split('=')[1];
