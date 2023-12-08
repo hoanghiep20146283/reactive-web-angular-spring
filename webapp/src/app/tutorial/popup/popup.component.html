@@ -1,0 +1,8 @@
+<button mat-raised-button (click)="showPopupClick()">
+  Event Binding: Show Popup
+</button>
+<mat-card class="popup-card" *ngIf="showPopup">
+  <mat-card-content>
+    <p>{{ displayContent }}</p>
+  </mat-card-content>
+</mat-card>
