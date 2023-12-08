@@ -10,3 +10,6 @@ ng serve
 
 # Running Angular Websocket Application
 npx nx serve --project=webapp
+
+# Generate a component 
+npx nx generate component
