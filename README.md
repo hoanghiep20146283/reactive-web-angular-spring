@@ -2,14 +2,16 @@
 Building a Reactive App with Angular and Spring Boot 2
 
 # Building a Reactive App with Angular and Spring Boot 2
-### Create shared data library
+
+# WebSocket Communications with Node and Angular
+## Generate a component 
+npx nx generate component
+
+## Create shared data library
 npx nx g @nx/js:lib types
+
+## Running Angular Websocket Application
+npx nx serve --project=webapp
 
 # Running Angular essential examples
 ng serve
-
-# Running Angular Websocket Application
-npx nx serve --project=webapp
-
-# Generate a component 
-npx nx generate component
