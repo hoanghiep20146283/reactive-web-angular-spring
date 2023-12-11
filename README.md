@@ -34,7 +34,7 @@ Options are `indigo-pink.css`, `deeppurple-amber.css`, `pink-bluegrey.css` and `
 ## Running Angular Websocket UI
 npx nx serve --project=webapp
 
-## Running Angular Websocket Server 
+## Running NodeJS Websocket Service
 npx nx serve server
 
 # Running Angular essential examples
