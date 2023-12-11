@@ -8,6 +8,7 @@ import { HttpClientModule, HttpXhrBackend } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatListModule } from '@angular/material/list';
 import { TutorialModule } from './tutorial/tutorial.module';
 import { FormsModule } from '@angular/forms';
 import {
@@ -23,6 +24,7 @@ import { MockXHRBackend } from './tutorial/mock-xhr-backend';
     BrowserAnimationsModule,
     BrowserModule,
     MatCardModule,
+    MatListModule,
     MatInputModule,
     AppRoutingModule,
     FormsModule,

@@ -20,10 +20,16 @@ npx nx generate @nrwl/node:app server
 npx nx generate @nrwl/angular:app webapp --backendProject server --strict false --style scss --routing false
 ```
 
-## Adding Angular Material
+### Adding Angular Material
 ```bash
 npx nx generate @angular/material:ng-add --project=webapp --typography false --theme indigo-pink --animations true
 ```
+
+After install, add the Angular material theming CSS file of your choice to the styles array
+of [project.json](./packages/webapp/project.json). For example:
+> "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+
+Options are `indigo-pink.css`, `deeppurple-amber.css`, `pink-bluegrey.css` and `purple-green.css`
 
 ## Running Angular Websocket Application
 npx nx serve --project=webapp

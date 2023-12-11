@@ -1,5 +1,5 @@
 import { IncomingMessage } from "http";
-import { ChatMessage, SystemNotice, User, WsMessage } from "types";
+import { ChatMessage, SystemNotice, User, WsMessage, LoginMessage, UserListMessage } from "types";
 import { WebSocket } from "ws";
 
 let currId = 1;
@@ -21,10 +21,26 @@ export class UserManager {
         }
 
         this.sendSystemNotice(systemNotice);
+
+        const loginMessage: LoginMessage = {
+            user,
+            event: 'login'
+        };
+        socket.send(JSON.stringify(loginMessage));
         this.sockets.set(socket, user);
+        this.sendUserListToAll();
     }
 
     remove(socket: WebSocket) {
+        const name = this.sockets.get(socket).name;
+
+        const systemNotice: SystemNotice = {
+            event: 'SystemNotice',
+            contents: `${name} has left the chat`,
+        }
+
+        this.sendSystemNotice(systemNotice);
+        this.sendUserListToAll();
         this.sockets.delete(socket);
     }
 
@@ -49,6 +65,18 @@ export class UserManager {
         Array.from(this.sockets.keys()).forEach(socket => {
             if (socket.readyState == WebSocket.OPEN) {
                 socket.send(data);
+            }
+        })
+    }
+
+    sendUserListToAll() {
+        const userListMessage: UserListMessage = {
+            event: 'userList',
+            users: Array.from(this.sockets.values())
+        }
+        Array.from(this.sockets.keys()).forEach(socket => {
+            if (socket.readyState == WebSocket.OPEN) {
+                socket.send(JSON.stringify(userListMessage));
             }
         })
     }

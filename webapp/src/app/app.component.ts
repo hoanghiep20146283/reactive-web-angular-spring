@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
   }
 
   onSystemNotice(notice: SystemNotice) {
+    console.log(`onSystemNotice: ${JSON.stringify(notice)}`)
     this.snackbar.open(notice.contents, undefined, { duration: 5000 })
   }
 }

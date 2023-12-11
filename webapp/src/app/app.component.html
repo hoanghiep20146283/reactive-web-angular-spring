@@ -14,6 +14,15 @@
   </ng-container>
 </div>
 
+<div class="user-list">
+  <p>User List:</p>
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let user of users" [class.current-user]="user.id === currentUser?.id">
+      Id: {{user.id}}, Name: {{user.name}}
+    </mat-list-item>
+  </mat-list>
+</div>
+
 <div class="chat-area">
   <mat-card
     *ngFor="let message of messages"

@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "types:lint": "nx lint types"
+    "types:lint": "nx lint types",
+    "server:start": "npx nx serve server",
+    "webapp:start": "npx nx serve webapp"
   },
   "dependencies": {
     "@angular/animations": "~16.2.0",
