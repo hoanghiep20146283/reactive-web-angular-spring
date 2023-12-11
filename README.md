@@ -31,8 +31,11 @@ of [project.json](./packages/webapp/project.json). For example:
 
 Options are `indigo-pink.css`, `deeppurple-amber.css`, `pink-bluegrey.css` and `purple-green.css`
 
-## Running Angular Websocket Application
+## Running Angular Websocket UI
 npx nx serve --project=webapp
+
+## Running Angular Websocket Server 
+npx nx serve server
 
 # Running Angular essential examples
 ng serve
