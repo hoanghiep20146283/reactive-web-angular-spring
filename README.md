@@ -39,3 +39,8 @@ npx nx serve server
 
 # Running Angular essential examples
 ng serve
+
+# Fix error TS2307: Cannot find module 'types' or its corresponding type declarations.
+* After build your library you have to pack it.
+* npm pack types
+* npm install .\types-0.1.1.tgz
