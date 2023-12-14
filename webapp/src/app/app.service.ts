@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { ChatMessage, SystemNotice, User, WsMessage } from 'types';
+import { ChatMessage, SystemNotice, User, WsMessage } from 'shared-types';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 @Injectable()

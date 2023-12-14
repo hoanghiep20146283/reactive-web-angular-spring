@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-declare module 'types' {
+declare module 'shared-types' {
   @NgModule({
     imports: [CommonModule],
   })

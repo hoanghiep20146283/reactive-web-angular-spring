@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatMessage, SystemNotice, User } from 'types';
+import { ChatMessage, SystemNotice, User } from 'shared-types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppService } from './app.service';
 

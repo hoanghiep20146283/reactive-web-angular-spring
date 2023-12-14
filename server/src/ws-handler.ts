@@ -2,7 +2,7 @@ import { Socket } from 'dgram';
 import { IncomingMessage } from 'http';
 import { WebSocket, WebSocketServer, ServerOptions, RawData } from 'ws'
 import { UserManager } from './user-manager';
-import { ChatMessage, WsMessage } from 'types';
+import { ChatMessage, WsMessage } from 'shared-types';
 
 export class WsHandler {
     private wsServer: WebSocketServer;

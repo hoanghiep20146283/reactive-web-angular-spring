@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ChatMessage, User } from 'types';
+import { ChatMessage, User } from 'shared-types';
 import { ActivatedRoute } from '@angular/router'
 import { Router } from '@angular/router';
 import { CardService } from './services/card-service.service';
