@@ -2,3 +2,7 @@
 /dist
 /coverage
 .angular
+package.json
+package-lock.json
+tslint.json
+*.yml
