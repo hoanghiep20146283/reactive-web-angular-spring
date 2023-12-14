@@ -2,7 +2,9 @@
   "scripts": {
     "types:lint": "nx lint types",
     "server:start": "npx nx serve server",
-    "webapp:start": "npx nx serve webapp"
+    "webapp:start": "npx nx serve webapp",
+    "precommit": "npm run lint",
+    "lint": "ng lint"
   },
   "dependencies": {
     "@angular/animations": "~16.2.0",
@@ -61,6 +63,7 @@
     "eslint": "~8.46.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.13.4",
+    "husky": "^8.0.3",
     "jasmine-core": "^5.1.1",
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
