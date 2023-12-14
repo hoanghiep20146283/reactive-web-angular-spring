@@ -4,7 +4,7 @@ export interface User {
 }
 
 // constants
-export const USERS_KEY: string = 'USERS';
+export const USERS_KEY = 'USERS';
 
 export const USERS: User[] = [
     { name: 'Johnny Allen', locationId: 0 },

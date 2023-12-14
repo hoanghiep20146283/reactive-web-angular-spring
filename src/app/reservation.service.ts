@@ -10,7 +10,7 @@ export class ReservationService {
   constructor(private http: HttpClient) {
   }
 
-  private baseUrl: string = 'http://localhost:8080';
+  private baseUrl = 'http://localhost:8080';
   private reservationUrl: string = this.baseUrl + '/api/v1/rooms/reservation';
   static httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
