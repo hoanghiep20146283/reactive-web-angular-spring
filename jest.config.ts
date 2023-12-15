@@ -1,5 +1,5 @@
-import { getJestProjects } from '@nx/jest';
-
-export default {
-  projects: getJestProjects(),
+module.exports = {
+  preset: 'jest-preset-angular',
+  setupTestFrameworkScriptFile: '<rootDir>/projects/setup-jest.ts',
+  roots: ['<rootDir>/projects/custom-status'],
 };

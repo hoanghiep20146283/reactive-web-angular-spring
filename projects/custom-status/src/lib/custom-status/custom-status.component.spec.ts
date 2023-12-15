@@ -1,6 +1,16 @@
+import 'zone.js';
+import 'zone.js/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CustomStatusComponent } from './custom-status.component';
+import {
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting,
+} from '@angular/platform-browser-dynamic/testing';
+
+TestBed.initTestEnvironment(
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting()
+);
 
 describe('CustomStatusComponent', () => {
   let component: CustomStatusComponent;
@@ -8,7 +18,7 @@ describe('CustomStatusComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CustomStatusComponent]
+      declarations: [CustomStatusComponent],
     });
     fixture = TestBed.createComponent(CustomStatusComponent);
     component = fixture.componentInstance;
