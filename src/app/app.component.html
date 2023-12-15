@@ -20,9 +20,9 @@
 </head>
 <style>
   :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol";
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+      'Segoe UI Symbol';
     font-size: 14px;
     color: #333;
     box-sizing: border-box;
@@ -67,14 +67,14 @@
   .room_icon {
     width: 32px; /* Set the desired width of the icon */
     height: 32px; /* Set the desired height of the icon */
-    background-image: url("assets/images/intro_room.jpg"); /* Replace 'path/to/your-icon-image.png' with the actual path to your icon image */
+    background-image: url('assets/images/intro_room.jpg'); /* Replace 'path/to/your-icon-image.png' with the actual path to your icon image */
     background-size: cover; /* Resize the background image to cover the icon area */
   }
 
   .room_icon_large {
     width: 200px; /* Set the desired width of the icon */
     height: 200px; /* Set the desired height of the icon */
-    background-image: url("assets/images/intro_room.jpg"); /* Replace 'path/to/your-icon-image.png' with the actual path to your icon image */
+    background-image: url('assets/images/intro_room.jpg'); /* Replace 'path/to/your-icon-image.png' with the actual path to your icon image */
     background-size: cover; /* Resize the background image to cover the icon area */
   }
 
@@ -213,7 +213,7 @@
   }
 
   .terminal::before {
-    content: "\2022 \2022 \2022";
+    content: '\2022 \2022 \2022';
     position: absolute;
     top: 0;
     left: 0;
@@ -332,10 +332,12 @@
 <!-- Nav -->
 <nav>
   <a routerLink="/app">
-    <img src="assets/images/intro_room.jpg" class="room_icon_large"> Room Navigator
+    <img src="assets/images/intro_room.jpg" class="room_icon_large" /> Room
+    Navigator
   </a>
   <a routerLink="/child">
-    <img src="assets/images/intro_room.jpg" class="room_icon_large"> Child Navigator
+    <img src="assets/images/intro_room.jpg" class="room_icon_large" /> Child
+    Navigator
   </a>
 </nav>
 <!-- Toolbar -->
@@ -657,17 +659,25 @@
         required
       />
     </div>
-    <div> 
+    <div>
       <label for="medium">Medium:</label>
       <select name="medium" id="medium" formControlName="medium">
-        <option *ngFor="let medium of lookupList" value="{{medium}}">{{medium}}</option>
+        <option *ngFor="let medium of lookupList" value="{{ medium }}">
+          {{ medium }}
+        </option>
       </select>
     </div>
     <button type="submit" [disabled]="mediaItemForm.invalid">Submit</button>
   </form>
 
   <div>
-    <p> Inject Token Example: {{injectTokens}}</p>
+    <p>Inject Token Example: {{ injectTokens }}</p>
+  </div>
+
+  <div>
+    <h2>Custom Library Example</h2>
+    <lib-custom-status customStatus="danger"></lib-custom-status>
+    <lib-custom-status customStatus="safe"></lib-custom-status>
   </div>
 </div>
 
