@@ -28,4 +28,8 @@ describe('CustomStatusComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should not create', () => {
+    expect(component).toBeFalsy();
+  });
 });
