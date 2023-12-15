@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -12,6 +12,8 @@ import { UserListComponent } from './user-list/user-list.component';
 import { HighlightTextPipe } from './pipes/highlight-text.pipe';
 import { HttpRequestInterceptorService } from './mocks/http-request-interceptor.service';
 import { CustomStatusModule } from 'custom-status';
+import { ErrorMetadataService } from './services/error-metadata.service';
+import { LocationIdPipe } from './pipes/location-id.pipe';
 const lookupLists = ['Movies'];
 
 @NgModule({
@@ -21,6 +23,7 @@ const lookupLists = ['Movies'];
     ChildComponent,
     UserListComponent,
     HighlightTextPipe,
+    LocationIdPipe,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ const lookupLists = ['Movies'];
   ],
   providers: [
     { provide: 'lookupList', useValue: lookupLists },
+    { provide: ErrorHandler, useClass: ErrorMetadataService },
     { provide: injectTokens, useValue: injectTokenValues },
     {
       provide: HTTP_INTERCEPTORS,

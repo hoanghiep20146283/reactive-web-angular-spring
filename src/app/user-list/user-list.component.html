@@ -22,8 +22,8 @@
 
 <ul class="user-list">
   <li
-    *ngFor="let user of users | async"
+    *ngFor="let user of users | async | locationId : 3 : 4 : 5"
     class="user-list-item"
-    [innerHtml]="user.name | highlightText: filter.value"
+    [innerHtml]="user.name | highlightText : filter.value"
   ></li>
 </ul>
