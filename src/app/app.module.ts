@@ -14,6 +14,7 @@ import { HttpRequestInterceptorService } from './mocks/http-request-interceptor.
 import { CustomStatusModule } from 'custom-status';
 import { ErrorMetadataService } from './services/error-metadata.service';
 import { LocationIdPipe } from './pipes/location-id.pipe';
+import { ListCurrentComponent } from './reservations/list-current/list-current.component';
 const lookupLists = ['Movies'];
 
 @NgModule({
@@ -24,6 +25,7 @@ const lookupLists = ['Movies'];
     UserListComponent,
     HighlightTextPipe,
     LocationIdPipe,
+    ListCurrentComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,27 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
-import { Reservation, ReservationRequest, ReservationService, SearchParams } from "./reservation.service";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+import {
+  Reservation,
+  ReservationRequest,
+  ReservationService,
+  SearchParams,
+} from './reservation.service';
 import { MediaItemService } from './media-item.services';
 import { MediaItem } from './media-item.model';
 import { injectTokens } from './providers';
@@ -10,10 +31,10 @@ import { WebStorageService } from './services/web-storage.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  exampleInput = "Example Input";
+  exampleInput = 'Example Input';
   title = 'reservation-app';
   rooms!: Room[];
   roomSearchForm!: FormGroup;
@@ -44,7 +65,7 @@ export class AppComponent implements OnInit {
     // if (control.value.trim().length === 0) {
     //   return null;
     // }
-    return { lastName: true }
+    return { lastName: true };
   }
 
   onMediaItemDelete(mediaItem: MediaItem) {
@@ -53,7 +74,6 @@ export class AppComponent implements OnInit {
 
   onSubmitMediaItem(mediaItem: any) {
     console.log('MediaItem submitted:', mediaItem);
-
   }
 
   ngOnInit() {
@@ -66,7 +86,10 @@ export class AppComponent implements OnInit {
         Validators.required,
         Validators.minLength(4),
       ]),
-      lastName: this.formBuilder.control('', this.lastNameValidator as ValidatorFn),
+      lastName: this.formBuilder.control(
+        '',
+        this.lastNameValidator as ValidatorFn
+      ),
     });
 
     this.mediaItemForm = this.formBuilder.group({
@@ -81,75 +104,86 @@ export class AppComponent implements OnInit {
       price: this.formBuilder.control(''),
       roomNumber: this.formBuilder.control(''),
     });
-    this.roomSearchForm.valueChanges.subscribe(form => {
+    this.roomSearchForm.valueChanges.subscribe((form) => {
       this.currentCheckIn = form.checkIn;
       this.currentCheckOut = form.checkOut;
-      if (form.roomNumber)
-      {
+      if (form.roomNumber) {
         const roomValues: string[] = form.roomNumber.split('|');
         this.currentRoomNumber = roomValues[0];
         this.currentPrice = Number(roomValues[1]);
       }
-    })
-    this.rooms = [new Room("1", 111, 100), new Room("2", 112, 200), new Room("3", 113, 300)];
+    });
+    this.rooms = [
+      new Room('1', 111, 100),
+      new Room('2', 112, 200),
+      new Room('3', 113, 300),
+    ];
     this.getCurrentReservations();
     this.searchReservations({});
 
     // Listen route change event
-    this.activatedRoute.paramMap.subscribe(paramMap => {
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
       const roomNumbers = paramMap.get('roomNumber');
-      if (roomNumbers)
-      {
+      if (roomNumbers) {
         const jsonString = JSON.stringify(roomNumbers);
-        console.log(`Room Numbers: ${roomNumbers}`)
+        console.log(`Room Numbers: ${roomNumbers}`);
       }
-      this.getCurrentReservations();
-    })
-  }
-
-  onChildItemDelete(event: any) {
-    console.log("Event:" + event + "; type: " + (typeof event));
-  }
-
-  getCurrentReservations() {
-    this.reservationService.getReservations().subscribe(reservations => {
-      reservations.forEach(reservation => console.log(reservation))
-      this.currentReservations = reservations;
-    })
-  }
-
-  searchReservations(searchParams: SearchParams) {
-    this.reservationService.searchReservations(searchParams).subscribe(reservations => {
-      reservations.forEach(reservation => console.log(reservation))
-      this.currentReservations = reservations;
-    })
-  }
-
-  createReservation() {
-    this.reservationService.createReservation(
-      new ReservationRequest(this.currentRoomNumber, this.currentPrice, this.currentCheckIn, this.currentCheckOut)
-    ).subscribe(result => {
-      this.router.navigate(['/child']);
-      this.getCurrentReservations();
-    })
-  }
-
-  deleteReservation(id: string) {
-    console.log("Deleting...")
-    this.reservationService.deleteReservation(id).subscribe(result => {
       this.getCurrentReservations();
     });
   }
 
-  constructor(@Inject('lookupList') public lookupList: string[],
+  onChildItemDelete(event: any) {
+    console.log('Event:' + event + '; type: ' + typeof event);
+  }
+
+  getCurrentReservations() {
+    this.reservationService.getReservations().subscribe((reservations) => {
+      reservations.forEach((reservation) => console.log(reservation));
+      this.currentReservations = reservations;
+    });
+  }
+
+  searchReservations(searchParams: SearchParams) {
+    this.reservationService
+      .searchReservations(searchParams)
+      .subscribe((reservations) => {
+        reservations.forEach((reservation) => console.log(reservation));
+        this.currentReservations = reservations;
+      });
+  }
+
+  createReservation() {
+    this.reservationService
+      .createReservation(
+        new ReservationRequest(
+          this.currentRoomNumber,
+          this.currentPrice,
+          this.currentCheckIn,
+          this.currentCheckOut
+        )
+      )
+      .subscribe((result) => {
+        this.router.navigate(['/current-reservations']);
+        this.getCurrentReservations();
+      });
+  }
+
+  deleteReservation(id: string) {
+    console.log('Deleting...');
+    this.reservationService.deleteReservation(id).subscribe((result) => {
+      this.getCurrentReservations();
+    });
+  }
+
+  constructor(
+    @Inject('lookupList') public lookupList: string[],
     @Inject(injectTokens) public injectTokens: string[],
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private reservationService: ReservationService,
     private formBuilder: FormBuilder,
-    private mediaItemService: MediaItemService) {
-
-  }
+    private mediaItemService: MediaItemService
+  ) {}
 }
 
 export class Room {
@@ -163,4 +197,3 @@ export class Room {
     this.price = price;
   }
 }
-

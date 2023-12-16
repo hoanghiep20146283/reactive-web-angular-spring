@@ -1,0 +1,44 @@
+<div class="row" *ngIf="currentReservations">
+  <h1>Current Reservations</h1>
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table" id="currentReservations">
+        <tbody>
+          <tr *ngFor="let reservation of currentReservations">
+            <td>
+              <div class="room_icon"></div>
+            </td>
+            <td>
+              <strong>Id: {{ reservation.id }}</strong>
+              <br />
+              <strong>Room: {{ reservation.roomNumber }}</strong>
+              <br />
+              <strong>Price: {{ reservation.price }}</strong>
+              <br />
+              <strong
+                >CheckIn: {{ reservation.checkIn[2] }} -
+                {{ reservation.checkIn[1] }} -
+                {{ reservation.checkIn[0] }}</strong
+              >
+              <br />
+              <strong
+                >CheckOut: {{ reservation.checkOut[2] }} -
+                {{ reservation.checkOut[1] }} -
+                {{ reservation.checkOut[0] }}</strong
+              >
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-primary btn-large"
+                (click)="deleteReservation(reservation.id)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
