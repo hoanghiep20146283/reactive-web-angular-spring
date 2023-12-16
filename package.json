@@ -6,6 +6,7 @@
     "precommit": "run-s format:fix lint",
     "format:fix": "pretty-quick --staged",
     "lint": "ng lint",
+    "test": "ng test --karma-config karma.conf.js --watch=false --code-coverage",
     "test:lib": "jest",
     "test:lib:watch": "jest --watch"
   },
