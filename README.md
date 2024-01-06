@@ -38,6 +38,9 @@ npx nx serve --project=webapp
 npx nx serve server
 
 # Running Angular essential examples
+## Build custom-status project
+ng build custom-status
+## Run main app
 ng serve
 
 # Fix error TS2307: Cannot find module 'types' or its corresponding type declarations.

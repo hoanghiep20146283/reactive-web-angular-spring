@@ -15,6 +15,7 @@ import { CustomStatusModule } from 'custom-status';
 import { ErrorMetadataService } from './services/error-metadata.service';
 import { LocationIdPipe } from './pipes/location-id.pipe';
 import { ListCurrentComponent } from './reservations/list-current/list-current.component';
+import { LearningCssComponent } from './tutorial/learning-css/learning-css.component';
 const lookupLists = ['Movies'];
 
 @NgModule({
@@ -26,6 +27,7 @@ const lookupLists = ['Movies'];
     HighlightTextPipe,
     LocationIdPipe,
     ListCurrentComponent,
+    LearningCssComponent,
   ],
   imports: [
     BrowserModule,
