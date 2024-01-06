@@ -3,8 +3,13 @@ import { AppComponent } from './app.component';
 import { ChildComponent } from './child.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { ListCurrentComponent } from './reservations/list-current/list-current.component';
+import { LearningCssComponent } from './tutorial/learning-css/learning-css.component';
 
 const appRoutes: Routes = [
+  {
+    path: 'learning-css',
+    component: LearningCssComponent,
+  },
   {
     path: 'app/:roomNumber',
     component: AppComponent,
