@@ -1,7 +1,50 @@
+.inherit-all {
+    padding: 30px;
+    border: 2px solid black;
+}
+
+p {
+    padding: 50px;
+}
+
+.unset-all {
+    color: black;
+}
+
 .inheritance div {
-    color: red;
+    color: black;
 }
 
 .inheritance em {
     color: blue;
+}
+
+.control-inherit {
+    border: 1px solid red;
+}
+
+.control-inherit p {
+    margin: 10px;
+    border: inherit;
+    border-style: dotted;
+}
+
+.unset-all p {
+    all: unset;
+}
+
+.revert-example p {
+    all: revert
+}
+
+.inherit-all a:hover {
+    all: inherit;
+}
+
+.unset-all a:hover {
+    all: unset;
+}
+
+.initial-example p {
+    all: initial;
 }
